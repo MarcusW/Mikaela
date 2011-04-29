@@ -1,0 +1,11 @@
+<!-- Nachdem ein Photo zum Webservice hochgeladen wurde ("<webservice-url>/photos?name=dateiname.jpg"), bekommt man eine id zur�ckgeliefert. Mit dieser ID ist es m�glich dem Photo Metadaten hinzuzuf�gen. Der Upload dieser Daten erfolgt dann an "<webservice-url>/photos?id=XX". Im folgenden wird ein Beipiel von Daten aufgef�hrt:-->
+<photo created="1302011614" title="Catedral del buen pastor" geo_lat="43.31721809"
+	geo_long="-1.98207736000229" aperture="F/8" exposuretime="1/250s" focallength="24mm"
+	user_name="MaNi" author="1" upload_complete="1">
+	<tags>
+		<tag>Architektur</tag>
+		<tag>Donostia</tag>
+	</tags>
+	<description>Kathedrale in Donostia, Spanien.</description>
+</photo>
+<!-- Dem upload_complete Attribut kommt besondere Bedeutung zu, erst wenn es auf 1 gesetzt wird wird das Photo in den Listen  ngezeigt. Vorher ist es nur �ber die ID zu erreichen ("<webservice-url>/photos?id=XX).-->

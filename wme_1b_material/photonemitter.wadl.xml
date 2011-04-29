@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pp="http://www-mmt.inf.tu-dresden.de/Lehre/Sommersemester_10/Vo_WME/Uebung/material/photonpainter" xmlns="http://wadl.dev.java.net/2009/02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 http://www.w3.org/Submission/wadl/wadl.xsd">
+  <doc title="PhotonEmitter REST API Overview">PhotonEmitter is a REST Web Service for Photos</doc>
+	<grammars>
+		<include href="photonpainter.xsd" />
+		<xsd:simpleType name="commaList">
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="([^,]+,)*[^,]+"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</grammars>
+
+	<resources base="http://www.mmt.inf.tu-dresden.de/photon/PhotonEmitter">
+		<resource path="photos">
+			<doc>Photos of the PhotonPainter application landscape. A photo belongs to an author.</doc>
+			<method name="GET">
+				<doc>Retrieve photo entries metadata. This method is also used to retrieve a single image *file*. For this to work, only one image must be requested.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<param name="id" style="query" type="xsd:integer">
+						<doc>The photo's ID. Used for unique identification.</doc>
+					</param>
+					<param name="tags" style="query" type="commaList">
+						<doc>A comma-separated list of terms that the photo is tagged with. The photo must match all of the supplied tags.</doc>
+					</param>					
+					<param name="geoFrame" style="query" type="xsd:string">
+						<doc>
+							A rectangular frame of geo coordinates which the image must match. 
+							Must have the form of [[minLatitude],[minLongitude],[maxLatitude],[maxLongitude]] (without brackets).
+							Values latitude: -90 - 90, values longitude -180 - 180. Values are numeric in double format with ".".
+						</doc>
+					</param>
+					<param name="sortBy" style="query">
+						<doc>An order criterium for the returned list.</doc>
+						<option value="title"/>
+						<option value="created"/>
+						<option value="author"/>
+						<option value="rating"/>
+						<option value="views"/>
+					</param>
+					<param name="searchTerm" style="query" type="xsd:string">					
+						<doc>A search term for the photo. Searches title and description.</doc>
+					</param>
+					<param name="offset" style="query" type="xsd:integer">
+						<doc>An offset when requesting only a subset of the selected photos. Similar to SQL "LIMIT" use.</doc>
+					</param>
+					<param name="limit" style="query" type="xsd:integer">
+						<doc>A limit for requesting only a subset of the selected photos. Similar to SQL "LIMIT" use.</doc>
+					</param>
+					<param name="format" style="query" type="xsd:string">
+						<option value="xml" mediaType="application/xml">
+							<doc>Request photo entries as an XML list.</doc>
+						</option>
+						<option value="json" mediaType="application/json" >
+							<doc>Request photo entries as a JSON list.</doc>
+						</option>
+						<option value="img" mediaType="image/*" >
+							<doc>Request one single photo as binary file. If the given parameters match more than one photo, this request will fail.</doc>
+						</option>
+						<option value="smallimg" mediaType="image/*" >
+							<doc>Requests the photo as a resized version (within 400x400px). If the given parameters match more than one photo, this request will fail.</doc>
+						</option>
+						<option value="thumbnail" mediaType="image/*" >
+							<doc>Requests the photo as a thumbnail version (within 120x120px). If the given parameters match more than one photo, this request will fail.</doc>
+						</option>
+						<option value="tinyimg" mediaType="image/*" >
+							<doc>Requests the photo as a tiny version (within 50x50px). If the given parameters match more than one photo, this request will fail.</doc>
+						</option>
+					</param>
+				</request>
+				<response status="200">
+					<doc>The photo request succeeded and is answered normally.</doc>
+					<representation mediaType="application/xml" element="pp:photos"/>
+					<representation mediaType="application/json" />
+					<representation mediaType="image/*" />
+				</response>		
+				<response status="404">
+					<doc>No photo found that matched the search criteria.</doc>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to request photos.</doc>
+				</response>
+				<response status="412">
+					<doc>An image *file* was requested but the given parameters do not identify a single image.</doc>
+				</response>
+			</method>
+			<method name="PUT">
+				<doc>Uploads a new photo to the web service. Only the binary file will be transmitted.
+				In return, an ID is provided, with which the photo's metadata can be added.
+				Without this metadata, the photo is not fully committed.</doc>
+				<request>
+					<param name="name" style="query" type="xsd:string">
+						<doc>The (file)name of the to be submitted photo.</doc>
+					</param>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<representation mediaType="image/*">
+						<doc>The photo as binary file. Supported formats are JPG and PNG.</doc>
+					</representation>
+				</request>
+				<response status="200">
+					<doc>The photo submission succeeded.</doc>
+					<representation mediaType="text/plain">
+						<doc>the URI for the newly created photo.</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to add a new photo.</doc>
+				</response>
+				<response status="412">
+					<doc>The photo submission was rejected due to invalid parameters sent.</doc>
+				</response>
+			</method>			
+			<method name="POST">
+				<doc>Updates an existing photo with metadata. Note that all parameters are optional - only the provided ones will be updated.</doc>
+				<request>
+					<param name="id" style="query" type="xsd:integer">
+						<doc>The photo's ID.</doc>
+					</param>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>					
+					<representation mediaType="application/xml" element="pp:photo"/>
+				</request>
+				<response status="201">
+					<doc>The photo update succeeded.</doc>
+					<representation mediaType="application/xml" element="pp:photo"/>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to add a new photo.</doc>
+				</response>
+				<response status="412">
+					<doc>The photo submission was rejected due to invalid parameters sent.</doc>
+				</response>
+			</method>
+			<method name="DELETE">
+				<doc>Delete a photo entry.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<param name="id" style="query" type="xsd:integer" />
+				</request>
+				<response status="200">
+					<doc>The photo was successfully deleted.</doc>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to delete this photo.</doc>
+				</response>
+				<response status="404">
+					<doc>The photo to delete was not found.</doc>
+				</response>
+				<response status="500">
+					<doc>The photo could not be deleted due to an internal error.</doc>
+				</response>
+			</method>
+		</resource>
+		
+		<resource path="users">
+			<doc>Users of the PhotonPainter application landscape.</doc>
+			<method name="GET">
+				<doc>Retrieve a single user account. Can either be used with ID to retrieve a unique user
+				or as a combination of username/password, to validate some end user's credentials.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<param name="id" style="query" type="xsd:integer">
+						<doc>The user's ID. Used for unique identification.</doc>
+					</param>
+					<param name="username" style="query" type="xsd:integer">
+						<doc>The user's login name. Used to validate an end user's credentials. Case sensitive!</doc>
+					</param>
+					<param name="password" style="query" type="xsd:integer">
+						<doc>The user's password. Used to validate an end user's credentials. Case sensitive!</doc>
+					</param>
+					<param name="format" style="query" type="xsd:string">
+						<option value="xml" mediaType="application/xml"/>
+						<option value="json" mediaType="application/json" />
+					</param>
+				</request>
+				<response status="200">
+					<doc>The user request succeeded and is answered normally.</doc>
+					<representation mediaType="application/xml" element="pp:user" />
+					<representation mediaType="application/json" />
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to request user accounts.</doc>
+				</response>
+				<response status="404">
+					<doc>No user account found that matched the search criteria.</doc>
+				</response>
+			</method>
+			<method name="PUT">
+				<doc>Create a new user account.</doc>
+				<request>				
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<representation mediaType="application/xml" element="pp:user"/>
+				</request>
+				<response status="201">
+					<doc>The user account submission succeeded.</doc>
+					<representation mediaType="application/xml" element="pp:user"/>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to add a new user account.</doc>
+				</response>
+				<response status="412">
+					<doc>The user account submission was rejected due to invalid parameters sent.</doc>
+				</response>
+			</method>
+			<method name="DELETE">
+				<doc>Delete a user account.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<param name="id" style="query" type="xsd:integer" />
+				</request>
+				<response status="200">
+					<doc>The user account was successfully deleted.</doc>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to delete this user account.</doc>
+				</response>
+				<response status="404">
+					<doc>The user account to delete was not found.</doc>
+				</response>
+				<response status="500">
+					<doc>The user account could not be deleted due to an internal error.</doc>
+				</response>
+			</method>
+		</resource>
+		
+		<resource path="comments">
+			<doc>Comments of the PhotonPainter application landscape. A comment belongs to a photo and an author.</doc>		
+			<method name="GET">
+				<doc>Retrieve a list of comments.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<param name="id" style="query" type="xsd:integer">
+						<doc>The comment's ID. Used for unique identification.</doc>
+					</param>
+					<param name="photoId" style="query" type="xsd:integer">
+						<doc>The ID of a photo for which to retrieve the list of comments.</doc>
+					</param>
+					<param name="format" style="query" type="xsd:string">
+						<option value="xml" mediaType="application/xml"/>
+						<option value="json" mediaType="application/json" />
+					</param>
+				</request>
+				<response status="200">
+					<doc>The comment request succeeded and is answered normally.</doc>
+					<representation mediaType="application/xml" element="pp:comments" />
+					<representation mediaType="application/json" />
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to request comments.</doc>
+				</response>
+				<response status="404">
+					<doc>No comment found that matched the search criteria.</doc>
+				</response>
+			</method>
+			<method name="PUT">
+				<doc>Create a new comment.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<representation mediaType="application/xml" element="pp:comment"/>
+				</request>
+				<response status="201">
+					<doc>The comment submission succeeded.</doc>
+					<representation mediaType="application/xml" element="pp:comment"/>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to add a new comment.</doc>
+				</response>
+				<response status="412">
+					<doc>The comment submission was rejected due to invalid parameters sent.</doc>
+				</response>
+			</method>
+			<method name="DELETE">
+				<doc>Delete a comment.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<param name="id" style="query" type="xsd:integer" />
+				</request>
+				<response status="200">
+					<doc>The comment was successfully deleted.</doc>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to delete this comment.</doc>
+				</response>
+				<response status="404">
+					<doc>The comment to delete was not found.</doc>
+				</response>
+				<response status="500">
+					<doc>The comment could not be deleted due to an internal error.</doc>
+				</response>
+			</method>
+		</resource>
+		
+		<resource path="ratings">
+			<doc>Ratings of the PhotonPainter application landscape. A rating belongs to a photo and a submitter.</doc>
+			<method name="GET">
+				<doc>Retrieve a list of ratings.</doc>
+				<request>				
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<param name="id" style="query" type="xsd:integer">
+						<doc>The rating's ID. Used for unique identification.</doc>
+					</param>
+					<param name="photoId" style="query" type="xsd:integer">
+						<doc>The ID of a photo for which to retrieve the list of ratings.</doc>
+					</param>
+					<param name="format" style="query" type="xsd:string">
+						<option value="xml" mediaType="application/xml"/>
+						<option value="json" mediaType="application/json" />
+					</param>
+				</request>
+				<response status="200">
+					<doc>The rating request succeeded and is answered normally.</doc>
+					<representation mediaType="application/xml" element="pp:ratings" />
+					<representation mediaType="application/json" />
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to request ratings.</doc>
+				</response>
+				<response status="404">
+					<doc>No rating found that matched the search criteria.</doc>
+				</response>
+			</method>
+			<method name="PUT">
+				<doc>Create a new rating.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<representation mediaType="application/xml" element="pp:rating"/>
+				</request>
+				<response status="201">
+					<doc>The rating submission succeeded.</doc>
+					<representation mediaType="application/xml" element="pp:rating"/>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to add a new rating.</doc>
+				</response>
+				<response status="412">
+					<doc>The rating submission was rejected due to invalid parameters sent.</doc>
+				</response>
+			</method>
+			<method name="DELETE">
+				<doc>Delete a rating.</doc>
+				<request>
+					<param name="apiKey" style="query" type="xsd:string">
+						<doc>The API key used to authenticate against the web service.</doc>
+					</param>
+					<param name="id" style="query" type="xsd:integer" />
+				</request>
+				<response status="200">
+					<doc>The rating was successfully deleted.</doc>
+				</response>
+				<response status="403">
+					<doc>The client is not authorized to delete this rating.</doc>
+				</response>
+				<response status="404">
+					<doc>The rating to delete was not found.</doc>
+				</response>
+				<response status="500">
+					<doc>The rating could not be deleted due to an internal error.</doc>
+				</response>
+			</method>
+		</resource>
+		<resource path="update">
+			<doc>.</doc>
+			<method name="GET">
+				<doc>Start update.</doc>
+				<request>				
+				</request>
+				<response status="200">
+					<doc>Status (boolean), if the update was successfull.</doc>
+					<representation mediaType="application/xml" element="pp:ratings" />
+					<representation mediaType="application/json" />
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="stylesheet.xsl" ?>
+<pp:photos xmlns:pp="http://www-mmt.inf.tu-dresden.de/Lehre/Sommersemester_10/Vo_WME/Uebung/material/photonpainter">
+	<pp:photo id="1" created="1263655469" title="Campus auf Eis" width="1200"
+		height="800" geo_lat="51.028865159963" geo_long="13.729691509997" aperture="F/7"
+		exposuretime="1/6s" focallength="220mm" views="3" original_filename="eis.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>Aufnahme aus dem Inneren des HSZ im Winter 2009/2010.</pp:description>
+		<pp:tags>
+			<pp:tag>Eis</pp:tag>
+			<pp:tag>Winter</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="15" photo_id="1" user_id="1" value="2"/>
+			<pp:rating id="30" photo_id="1" user_id="2" value="2"/>
+		</pp:ratings>
+		<pp:comments>
+			<pp:comment id="1" photo_id="1" user_id="-1" created="1269263942" title="Sparkurs">Dass die Uni so sehr sparen muss...</pp:comment>
+			<pp:comment id="2" photo_id="1" user_id="-1" created="1269353942" title="Sparen">Sparen, Sparen, ....</pp:comment>
+		</pp:comments>
+	</pp:photo>
+	<pp:photo id="2" created="1238317025" title="Leckere Beeren" width="1200"
+		height="800" geo_lat="28.094910849994" geo_long="-16.726593380009" aperture="F/8"
+		exposuretime="1/25s" focallength="55mm" views="0" original_filename="beeren.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>Ob sie essbar sind oder nicht, wer weiß das schon?</pp:description>
+		<pp:tags>
+			<pp:tag>Pflanzen</pp:tag>
+			<pp:tag>Teneriffa</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="59" photo_id="2" user_id="1" value="5"/>
+			<pp:rating id="136" photo_id="2" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="3" created="1246105451" title="Crossing Bilbao" width="1200"
+		height="800" geo_lat="43.266563750161" geo_long="-2.9275345800346" aperture="F/16"
+		exposuretime="1/100s" focallength="18mm" views="0" original_filename="bilbao.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>
+			Eine schöne Brücke in Bilbao, in der Nähe des Guggenheim-Museums.
+		</pp:description>
+		<pp:tags>
+			<pp:tag>Architektur</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="14" photo_id="3" user_id="3" value="2"/>
+			<pp:rating id="43" photo_id="3" user_id="1" value="3"/>
+			<pp:rating id="188" photo_id="3" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="4" created="1246026853" title="Bohnen!" width="1200" height="800"
+		geo_lat="43.313024200032" geo_long="-1.9936779100529" aperture="F/7" exposuretime="1/400s"
+		focallength="55mm" views="0" original_filename="bohnen.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Was gibt es mehr zu sagen?</pp:description>
+		<pp:tags>
+			<pp:tag>Donostia</pp:tag>
+			<pp:tag>Pflanzen</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="225" photo_id="4" user_id="1" value="3"/>
+			<pp:rating id="232" photo_id="4" user_id="2" value="2"/>
+		</pp:ratings>
+		<pp:comments>
+			<pp:comment id="3" photo_id="4" user_id="-1" created="1269523493" title="test">Dies ist ein Testkommentar</pp:comment>
+		</pp:comments>
+	</pp:photo>
+	<pp:photo id="5" created="1255949695" title="Boule" width="1200" height="800"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/5" exposuretime="1/250s"
+		focallength="250mm" views="0" original_filename="boule.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Männersport mit Reflektionen</pp:description>
+		<pp:tags>
+			<pp:tag>Boule</pp:tag>
+			<pp:tag>Sport</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="122" photo_id="5" user_id="2" value="2"/>
+			<pp:rating id="127" photo_id="5" user_id="1" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="6" created="1245598400" title="Catedral del buen pastor" width="1200"
+		height="800" geo_lat="43.31721809" geo_long="-1.9820773600023" aperture="F/8"
+		exposuretime="1/250s" focallength="24mm" views="0" original_filename="catedraldelbuenpastor.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>Kathedrale in Donostia, Spanien.</pp:description>
+		<pp:tags>
+			<pp:tag>Architektur</pp:tag>
+			<pp:tag>Donostia</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="18" photo_id="6" user_id="2" value="1"/>
+			<pp:rating id="87" photo_id="6" user_id="1" value="3"/>
+			<pp:rating id="154" photo_id="6" user_id="3" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="7" created="1245587888" title="This is Donostia!" width="1200"
+		height="800" geo_lat="43.321756099994" geo_long="-2.0055882599581" aperture="F/10"
+		exposuretime="1/125s" focallength="35mm" views="0" original_filename="donostia.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>
+			Das \"Wahrzeichen\" von Donostia, oder ein Teil davon (an der Küste gibt es
+				noch mehr).
+		</pp:description>
+		<pp:tags>
+			<pp:tag>Donostia</pp:tag>
+			<pp:tag>Wahrzeichen</pp:tag>
+			<pp:tag>Wasser</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="6" photo_id="7" user_id="2" value="4"/>
+			<pp:rating id="107" photo_id="7" user_id="1" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="8" created="1238494142" title="Falke" width="1200" height="871"
+		geo_lat="28.079662230035" geo_long="-16.695259809996" aperture="F/7" exposuretime="1/500s"
+		focallength="55mm" views="0" original_filename="falke.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>... hat sich gerade einen Menschen geangelt.</pp:description>
+		<pp:tags>
+			<pp:tag>Teneriffa</pp:tag>
+			<pp:tag>Tiere</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="126" photo_id="8" user_id="3" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="9" created="1238345228" title="Feuerblume" width="1200" height="800"
+		geo_lat="28.094120549953" geo_long="-16.726322470032" aperture="F/11" exposuretime="1/100s"
+		focallength="55mm" views="0" original_filename="feuerbluete.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Nicht anfassen, heiß!</pp:description>
+		<pp:tags>
+			<pp:tag>Pflanzen</pp:tag>
+			<pp:tag>Teneriffa</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="78" photo_id="9" user_id="2" value="2"/>
+			<pp:rating id="196" photo_id="9" user_id="3" value="2"/>
+			<pp:rating id="235" photo_id="9" user_id="1" value="1"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="10" created="1246099793" title="7 Jahre Unglück" width="1200"
+		height="800" geo_lat="43.260888720027" geo_long="-2.9354511199933" aperture="F/3"
+		exposuretime="1/250s" focallength="18mm" views="0" original_filename="fractions.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>...</pp:description>
+		<pp:tags>
+			<pp:tag>Architektur</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="33" photo_id="10" user_id="1" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="11" created="1238768356" title="Der Frosch" width="1200" height="767"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/5" exposuretime="1/100s"
+		focallength="55mm" views="0" original_filename="frosch.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>sitzt im Teich.</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+			<pp:tag>Tiere</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="99" photo_id="11" user_id="1" value="4"/>
+			<pp:rating id="105" photo_id="11" user_id="3" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="12" created="1243226803" title="Frühling an der Fakultät" width="1200"
+		height="800" geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/10"
+		exposuretime="1/125s" focallength="18mm" views="0" original_filename="fruehling.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>...</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+			<pp:tag>Frühling</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="41" photo_id="12" user_id="1" value="2"/>
+			<pp:rating id="104" photo_id="12" user_id="2" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="13" created="1260896555" title="GridLayout" width="1200" height="800"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/8" exposuretime="1/0s"
+		focallength="18mm" views="0" original_filename="gridlayout.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>...alles gerastert.</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="28" photo_id="13" user_id="3" value="1"/>
+			<pp:rating id="202" photo_id="13" user_id="2" value="4"/>
+			<pp:rating id="241" photo_id="13" user_id="1" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="14" created="1237721713" title="Grün" width="1200" height="800"
+		geo_lat="28.074486570002" geo_long="-16.734119650001" aperture="F/8" exposuretime="1/200s"
+		focallength="55mm" views="0" original_filename="leben.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Die Farbe des Lebens.</pp:description>
+		<pp:tags>
+			<pp:tag>Pflanzen</pp:tag>
+			<pp:tag>Teneriffa</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="88" photo_id="14" user_id="2" value="3"/>
+			<pp:rating id="168" photo_id="14" user_id="3" value="5"/>
+			<pp:rating id="237" photo_id="14" user_id="1" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="15" created="1238499655" title="Leckerbissen" width="1200" height="800"
+		geo_lat="28.080055060015" geo_long="-16.695833799991" aperture="F/7" exposuretime="1/60s"
+		focallength="47mm" views="0" original_filename="leckerbissen.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Jetzt auch als Snack für zwischendurch!</pp:description>
+		<pp:tags>
+			<pp:tag>Teneriffa</pp:tag>
+			<pp:tag>Tiere</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="63" photo_id="15" user_id="3" value="5"/>
+			<pp:rating id="94" photo_id="15" user_id="2" value="2"/>
+			<pp:rating id="183" photo_id="15" user_id="1" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="16" created="1245437811" title="Chaos" width="800" height="1200"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/4" exposuretime="1/40s"
+		focallength="18mm" views="0" original_filename="lndw.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Lange Nacht der Wissenschaften 2009.</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="23" photo_id="16" user_id="1" value="2"/>
+			<pp:rating id="96" photo_id="16" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="17" created="1268291642" title="Morgenstund hat Gold im Mund"
+		width="1200" height="800" geo_lat="51.025221270078" geo_long="13.723254200014"
+		aperture="F/6" exposuretime="1/25s" focallength="250mm" views="0" original_filename="morninggold.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>
+			So sagt man sich. In der Fakultät kann man auch dem Edelmetall nachjagen,
+				wenn das Licht richtig hereinfällt...
+		</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="29" photo_id="17" user_id="1" value="3"/>
+			<pp:rating id="77" photo_id="17" user_id="3" value="3"/>
+			<pp:rating id="148" photo_id="17" user_id="2" value="4"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="18" created="1240807932" title="Output" width="1200" height="800"
+		geo_lat="51.025217900011" geo_long="13.723307849996" aperture="F/4" exposuretime="1/50s"
+		focallength="33mm" views="0" original_filename="output.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Gesammelte Werke</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="60" photo_id="18" user_id="2" value="5"/>
+			<pp:rating id="71" photo_id="18" user_id="1" value="5"/>
+			<pp:rating id="133" photo_id="18" user_id="3" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="19" created="1245966905" title="Puente de la Zurriola" width="1200"
+		height="800" geo_lat="43.320877020026" geo_long="-1.9783222700634" aperture="F/8"
+		exposuretime="1/0s" focallength="20mm" views="0" original_filename="puentedelazurriola.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>Letzte Brücke vor der Küste in Donostia.</pp:description>
+		<pp:tags>
+			<pp:tag>Architektur</pp:tag>
+			<pp:tag>Donostia</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="100" photo_id="19" user_id="2" value="3"/>
+			<pp:rating id="123" photo_id="19" user_id="1" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="20" created="1237547879" title="Robo-Draisine" width="1200"
+		height="800" geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/14"
+		exposuretime="1/15s" focallength="27mm" views="0" original_filename="roboter.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>
+			Im Einführungspraktikum sollen diese selbstgebauten Roboter einer schwarzen
+				Linie folgen und dabei viele Tücken umgehen.
+		</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="39" photo_id="20" user_id="1" value="2"/>
+			<pp:rating id="44" photo_id="20" user_id="2" value="3"/>
+			<pp:rating id="161" photo_id="20" user_id="3" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="21" created="1251803849" title="Seerose" width="1200" height="800"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/5" exposuretime="1/400s"
+		focallength="250mm" views="0" original_filename="seerose.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Fakultätsteichflora</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+			<pp:tag>Pflanzen</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="9" photo_id="21" user_id="1" value="2"/>
+			<pp:rating id="70" photo_id="21" user_id="3" value="4"/>
+			<pp:rating id="74" photo_id="21" user_id="2" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="22" created="1237744064" title="Splash!" width="1200" height="800"
+		geo_lat="28.092684270026" geo_long="-16.747257110051" aperture="F/10" exposuretime="1/500s"
+		focallength="35mm" views="0" original_filename="splash.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>t(x) = t(nass) - 0.2s</pp:description>
+		<pp:tags>
+			<pp:tag>Teneriffa</pp:tag>
+			<pp:tag>Wasser</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="4" photo_id="22" user_id="2" value="5"/>
+			<pp:rating id="91" photo_id="22" user_id="3" value="3"/>
+			<pp:rating id="143" photo_id="22" user_id="1" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="23" created="1237749266" title="Balance" width="800" height="1200"
+		geo_lat="28.087653590033" geo_long="-16.738156379976" aperture="F/7" exposuretime="1/160s"
+		focallength="30mm" views="0" original_filename="steine.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Steintürmchen am Strand</pp:description>
+		<pp:tags>
+			<pp:tag>Teneriffa</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="8" photo_id="23" user_id="2" value="2"/>
+			<pp:rating id="119" photo_id="23" user_id="3" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="24" created="1238093368" title="Strelizie" width="1200" height="800"
+		geo_lat="28.094539359982" geo_long="-16.736152770006" aperture="F/9" exposuretime="1/13s"
+		focallength="41mm" views="0" original_filename="strelizie.jpg" user_name="MaNi"
+		author="1">
+		<pp:description>Die bekannteste Pflanze Teneriffas.</pp:description>
+		<pp:tags>
+			<pp:tag>Pflanzen</pp:tag>
+			<pp:tag>Teneriffa</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="62" photo_id="24" user_id="2" value="5"/>
+			<pp:rating id="81" photo_id="24" user_id="1" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="25" created="1238492931" title="Schalk im Nacken" width="1200"
+		height="800" geo_lat="28.080055060015" geo_long="-16.695833799991" aperture="F/5"
+		exposuretime="1/100s" focallength="55mm" views="0" original_filename="teufelchen.jpg"
+		user_name="MaNi" author="1">
+		<pp:description>...</pp:description>
+		<pp:tags>
+			<pp:tag>Teneriffa</pp:tag>
+			<pp:tag>Tiere</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="2" photo_id="25" user_id="2" value="5"/>
+			<pp:rating id="193" photo_id="25" user_id="1" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="26" created="1213632729" title="Amsterdam street life" width="1024"
+		height="683" geo_lat="52.372322529999" geo_long="4.8944789199981" aperture="F/8"
+		exposuretime="1/125s" focallength="38mm" views="0" original_filename="amsterdam.jpg"
+		user_name="Donald" author="2">
+		<pp:description>Alltag in Amsterdam...</pp:description>
+		<pp:tags>
+			<pp:tag>Amsterdam</pp:tag>
+			<pp:tag>Niederlande</pp:tag>
+			<pp:tag>Street</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="49" photo_id="26" user_id="3" value="4"/>
+			<pp:rating id="68" photo_id="26" user_id="2" value="5"/>
+			<pp:rating id="83" photo_id="26" user_id="1" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="27" created="1216544408" title="Arena" width="1280" height="1938"
+		geo_lat="50.471367940001" geo_long="14.794356819969" aperture="F/16" exposuretime="1/640s"
+		focallength="21mm" views="0" original_filename="arena.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Aufgenommen bei Katusice, Tschechische Republik.</pp:description>
+		<pp:tags>
+			<pp:tag>Tschechien</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="25" photo_id="27" user_id="1" value="2"/>
+			<pp:rating id="52" photo_id="27" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="28" created="1216736721" title="Buschberg" width="1600" height="248"
+		geo_lat="48.5758192" geo_long="16.396547560018" aperture="F/16" exposuretime="1/400"
+		focallength="31mm" views="0" original_filename="buschberg.jpg" user_name="Donald"
+		author="2">
+		<pp:description>
+			Freihand-Panorama vom Buschberg in Österreich, nahe der tschechischen Grenze.
+		</pp:description>
+		<pp:tags>
+			<pp:tag>Österreich</pp:tag>
+			<pp:tag>Panorama</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="17" photo_id="28" user_id="1" value="2"/>
+			<pp:rating id="236" photo_id="28" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="29" created="1191567396" title="Ökodrache" width="1024" height="768"
+		geo_lat="48.844154550058" geo_long="2.3637355898945" aperture="F/9" exposuretime="1/100s"
+		focallength="6mm" views="0" original_filename="drachen.jpg" user_name="Donald"
+		author="2">
+		<pp:description>
+			Drachenfigur aus gepressten Dosen im Jardin des Plantes, Paris.
+		</pp:description>
+		<pp:tags>
+			<pp:tag>Frankreich</pp:tag>
+			<pp:tag>Paris</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="1" photo_id="29" user_id="1" value="4"/>
+			<pp:rating id="72" photo_id="29" user_id="2" value="5"/>
+			<pp:rating id="98" photo_id="29" user_id="3" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="30" created="1233574877" title="Eis" width="1280" height="854"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/5" exposuretime="1/50s"
+		focallength="55mm" views="0" original_filename="eisbrocken.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Ziemlich kalt...</pp:description>
+		<pp:tags>
+			<pp:tag>Eis</pp:tag>
+			<pp:tag>Winter</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="56" photo_id="30" user_id="3" value="4"/>
+			<pp:rating id="58" photo_id="30" user_id="2" value="5"/>
+			<pp:rating id="75" photo_id="30" user_id="1" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="31" created="1232366399" title="Gletscherplanken" width="1280"
+		height="853" geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/9"
+		exposuretime="1/60s" focallength="33mm" views="0" original_filename="eisholz.jpg"
+		user_name="Donald" author="2">
+		<pp:description>Steg hinter der Fakultät an einem Wintertag.</pp:description>
+		<pp:tags>
+			<pp:tag>Eis</pp:tag>
+			<pp:tag>Holz</pp:tag>
+			<pp:tag>Winter</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="11" photo_id="31" user_id="1" value="3"/>
+			<pp:rating id="84" photo_id="31" user_id="3" value="3"/>
+			<pp:rating id="110" photo_id="31" user_id="2" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="32" created="1216550651" title="Kornfeld" width="1280" height="853"
+		aperture="F/18" exposuretime="1/640s" focallength="55mm" views="0" original_filename="feld.jpg"
+		user_name="Donald" author="2">
+		<pp:description>Kornfeld in Tschechien</pp:description>
+		<pp:tags>
+			<pp:tag>Tschechien</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="26" photo_id="32" user_id="2" value="2"/>
+			<pp:rating id="129" photo_id="32" user_id="1" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="33" created="1232605422" title="Der Gang" width="1280" height="853"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/9" exposuretime="1/5s"
+		focallength="18mm" views="0" original_filename="gang.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Der Ausgang befindet sich in dieser Richtung.</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+			<pp:tag>Nacht</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="57" photo_id="33" user_id="1" value="4"/>
+			<pp:rating id="108" photo_id="33" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="34" created="1229496300" title="Green IT" width="1280" height="853"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/5" exposuretime="1/50s"
+		focallength="18mm" views="0" original_filename="gruen.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Durch eines der grünen Fenster im Foyer aufgenommen.</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="24" photo_id="34" user_id="2" value="2"/>
+			<pp:rating id="121" photo_id="34" user_id="1" value="1"/>
+			<pp:rating id="217" photo_id="34" user_id="3" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="35" created="1231395800" title="HDR Test" width="1280" height="853"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/4" focallength="28mm"
+		views="0" original_filename="hdr.jpg" user_name="Donald" author="2">
+		<pp:description>...</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+			<pp:tag>hdr</pp:tag>
+			<pp:tag>Winter</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="61" photo_id="35" user_id="1" value="5"/>
+			<pp:rating id="226" photo_id="35" user_id="2" value="2"/>
+			<pp:rating id="238" photo_id="35" user_id="3" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="36" created="1213726193" title="Straßenlampe" width="533" height="800"
+		geo_lat="52.014974080007" geo_long="4.3567657500132" aperture="F/9" exposuretime="1/200s"
+		focallength="55mm" views="0" original_filename="lampe.jpg" user_name="Donald"
+		author="2">
+		<pp:description>So sehen Straßenlampen in den Niederlanden aus... Delft, NL.</pp:description>
+		<pp:tags>
+			<pp:tag>Delft</pp:tag>
+			<pp:tag>Niederlande</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="135" photo_id="36" user_id="1" value="2"/>
+			<pp:rating id="192" photo_id="36" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="37" created="1233496144" title="Mainframe" width="1280" height="853"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/4" exposuretime="1/40s"
+		focallength="18mm" views="0" original_filename="mainframe.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Ausstellungsstück anlässlich des Mainframe Summit 2009.</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="90" photo_id="37" user_id="2" value="3"/>
+			<pp:rating id="221" photo_id="37" user_id="1" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="38" created="1216639213" title="Mohn" width="1280" height="1920"
+		geo_lat="49.496117060023" geo_long="15.328931809938" aperture="F/14" exposuretime="1/140s"
+		focallength="33mm" views="0" original_filename="mohn.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Mohnfeld in Tschechien bei Humpolec.</pp:description>
+		<pp:tags>
+			<pp:tag>Pflanzen</pp:tag>
+			<pp:tag>Tschechien</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="10" photo_id="38" user_id="2" value="1"/>
+			<pp:rating id="55" photo_id="38" user_id="1" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="39" created="1216655544" title="Geöffnet" width="1280" height="1687"
+		geo_lat="49.183568820002" geo_long="15.452506539997" aperture="F/11" exposuretime="1/250s"
+		focallength="25mm" views="0" original_filename="open.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Wir haben geöffnet - Telc, Tschechische Republik.</pp:description>
+		<pp:tags>
+			<pp:tag>Telc</pp:tag>
+			<pp:tag>Tschechien</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="3" photo_id="39" user_id="1" value="4"/>
+			<pp:rating id="32" photo_id="39" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="40" created="1232462973" title="Dresden-Plauen" width="1024"
+		height="683" geo_lat="51.023954280006" geo_long="13.703078630005" focallength="18mm"
+		views="0" original_filename="plauen.jpg" user_name="Donald" author="2">
+		<pp:description>HDR-Foto der Tharandter Straße.</pp:description>
+		<pp:tags>
+			<pp:tag>Dresden</pp:tag>
+			<pp:tag>hdr</pp:tag>
+			<pp:tag>Street</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="53" photo_id="40" user_id="1" value="3"/>
+			<pp:rating id="118" photo_id="40" user_id="2" value="4"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="41" created="1232988742" title="Schilf" width="1280" height="853"
+		geo_lat="51.025221270078" geo_long="13.723254200014" aperture="F/3" exposuretime="1/25s"
+		focallength="22mm" views="0" original_filename="schilf.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Schilf am Teich hinter der Fakultät.</pp:description>
+		<pp:tags>
+			<pp:tag>Fakultät</pp:tag>
+			<pp:tag>Pflanzen</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="45" photo_id="41" user_id="1" value="4"/>
+			<pp:rating id="48" photo_id="41" user_id="2" value="3"/>
+			<pp:rating id="182" photo_id="41" user_id="3" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="42" created="1231675640" title="Schneedünen" width="1280" height="853"
+		aperture="F/5" exposuretime="1/100s" focallength="35mm" views="0" original_filename="schnee.jpg"
+		user_name="Donald" author="2">
+		<pp:description>Sowas kennt man sonst nur mit Sand.</pp:description>
+		<pp:tags>
+			<pp:tag>Winter</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="21" photo_id="42" user_id="3" value="2"/>
+			<pp:rating id="79" photo_id="42" user_id="1" value="5"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="43" created="1236455864" title="CeBIT Skywalk" width="1280"
+		height="853" geo_lat="52.318687649997" geo_long="9.7982248699368" aperture="F/9"
+		exposuretime="1/1s" focallength="18mm" views="0" original_filename="skywalk.jpg"
+		user_name="Donald" author="2">
+		<pp:description>Der Skywalk zur CeBIT in Hannover.</pp:description>
+		<pp:tags>
+			<pp:tag>Cebit</pp:tag>
+			<pp:tag>Hannover</pp:tag>
+			<pp:tag>Nacht</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="5" photo_id="43" user_id="1" value="4"/>
+			<pp:rating id="175" photo_id="43" user_id="3" value="4"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="44" created="1269006613" title="SoundNexus" width="800" height="541"
+		views="0" original_filename="soundnexus.png" user_name="Donald" author="2">
+		<pp:description>Forschungsprototyp einer adaptiven Webanwendung.</pp:description>
+		<pp:tags>
+			<pp:tag>Screenshot</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="97" photo_id="44" user_id="1" value="2"/>
+			<pp:rating id="150" photo_id="44" user_id="2" value="1"/>
+			<pp:rating id="189" photo_id="44" user_id="3" value="1"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="45" created="1236451046" title="Straße" width="1280" height="853"
+		geo_lat="52.295895300013" geo_long="9.8200070900008" aperture="F/8" exposuretime="8/1s"
+		focallength="18mm" views="0" original_filename="strasse.jpg" user_name="Donald"
+		author="2">
+		<pp:description>Langzeitbelichtung von einer Brücke bei Hannover.</pp:description>
+		<pp:tags>
+			<pp:tag>Hannover</pp:tag>
+			<pp:tag>Nacht</pp:tag>
+			<pp:tag>Street</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="16" photo_id="45" user_id="2" value="2"/>
+			<pp:rating id="109" photo_id="45" user_id="1" value="3"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="46" created="1216655384" title="Telc" width="1280" height="850"
+		geo_lat="49.18335844" geo_long="15.451111789998" aperture="F/14" exposuretime="1/500s"
+		focallength="22mm" views="0" original_filename="telc.jpg" user_name="Karl"
+		author="3">
+		<pp:description>Weltkulturerbestadt Telc, Tschechische Republik.</pp:description>
+		<pp:tags>
+			<pp:tag>Telc</pp:tag>
+			<pp:tag>Tschechien</pp:tag>
+			<pp:tag>Weltkulturerbe</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="42" photo_id="46" user_id="3" value="2"/>
+			<pp:rating id="92" photo_id="46" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="47" created="1235334295" title="Tunnelsicht" width="1280" height="853"
+		geo_lat="51.023750140009" geo_long="13.700305219997" aperture="F/8" exposuretime="8/1s"
+		focallength="18mm" views="0" original_filename="tunnel.jpg" user_name="Karl"
+		author="3">
+		<pp:description>...</pp:description>
+		<pp:tags>
+			<pp:tag>Dresden</pp:tag>
+			<pp:tag>Nacht</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="7" photo_id="47" user_id="3" value="2"/>
+			<pp:rating id="22" photo_id="47" user_id="2" value="1"/>
+			<pp:rating id="31" photo_id="47" user_id="1" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+	<pp:photo id="48" created="1233168667" title="WTC Dresden" width="1280" height="853"
+		geo_lat="51.049501700026" geo_long="13.720378879974" aperture="F/8" exposuretime="2/1s"
+		focallength="18mm" views="0" original_filename="wtc.jpg" user_name="Karl"
+		author="3">
+		<pp:description>Das World Trade Center Dresden im Winter.</pp:description>
+		<pp:tags>
+			<pp:tag>Dresden</pp:tag>
+			<pp:tag>Nacht</pp:tag>
+		</pp:tags>
+		<pp:ratings>
+			<pp:rating id="128" photo_id="48" user_id="2" value="2"/>
+		</pp:ratings>
+	</pp:photo>
+</pp:photos>
