@@ -15,6 +15,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -84,13 +85,14 @@ public class Index extends HttpServlet
 			//Führe Transformation aus
 			TransformerFactory transFact = TransformerFactory.newInstance();
 	        Transformer trans = transFact.newTransformer(xsltSource);
-			trans.transform(xmlSource, new StreamResult(System.out));
+	        //trans.setParameter("{http://www.w3.org/1999/xhtml}w3", false);
+			trans.transform(xmlSource, new StreamResult(writer));
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 
-		writer.write("Done");
+		//writer.write("Done");
 	}
 }
