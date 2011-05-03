@@ -28,8 +28,6 @@
 		</xsl:variable>
 		<xsl:value-of select="$var_name"/>
 		
-		<xsl:value-of select="$var_newID"/>
-		
 		<!-- Da es kein else gibt nutze ich choose mit otherwise -->
 		<xsl:choose>
 			<xsl:when test="count(document('http://141.76.61.48:8103/photos')//pp:photo[@original_filename=$var_name]) &gt; 0">
