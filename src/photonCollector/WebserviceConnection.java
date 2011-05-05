@@ -2,18 +2,20 @@ package photonCollector;
 
 import java.io.*;
 import java.net.*;
-
 import org.xml.sax.InputSource;
+
 
 public class WebserviceConnection
 {
 	// Arguments
 	private String webServiceUrl;
+	private String tmpFilePath;
 
 	// Constructor
-	public WebserviceConnection(String webServiceUrl)
+	public WebserviceConnection(String webServiceUrl, String tmpFilePath)
 	{
 		this.webServiceUrl = webServiceUrl;
+		this.tmpFilePath = tmpFilePath;
 	}
 
 	// Methods
@@ -21,8 +23,8 @@ public class WebserviceConnection
 	{
 		File f = new File(localImagePath);
 		try
-		{
-			return put(new FileInputStream(f),f.getName());
+		{	
+			return put(new BufferedInputStream(new FileInputStream(f)),f.getName());
 		}
 		catch (Exception e)
 		{
@@ -31,13 +33,31 @@ public class WebserviceConnection
 		}
 	}
 
-	public int put(URL imageUrl)
+	public synchronized int put(URL imageUrl)
 	{
-		File f = new File(imageUrl.toString());
 		try
 		{
-			DataInputStream dis = new DataInputStream(new BufferedInputStream(imageUrl.openStream()));
-			return put(dis, f.getName());
+			BufferedInputStream bufIn = new BufferedInputStream(imageUrl.openStream());	
+			
+			int dotPos = imageUrl.getPath().lastIndexOf(".");
+			if(dotPos < 0)
+				return -1; //TODO: Fehler fuer Log
+			
+			String filepath = tmpFilePath + "/tmp." + imageUrl.getPath().substring(dotPos);
+			
+			java.io.FileOutputStream fos = new java.io.FileOutputStream(filepath, false);
+			java.io.BufferedOutputStream bout = new BufferedOutputStream(fos,1024);
+			byte data[] = new byte[1024];
+			int count;
+			while((count = bufIn.read(data,0,1024)) != -1)
+			{
+				bout.write(data,0,count);
+			}
+			bout.close();
+			fos.close();
+			bufIn.close();
+			
+			return put(filepath);
 		}
 		catch (Exception e)
 		{
@@ -46,13 +66,20 @@ public class WebserviceConnection
 		}
 	}
 
-	private int put(InputStream picInput, String picName)
+	private int put(BufferedInputStream picInput, String picName)
 	{
 		if(picInput == null || picName == null)
 			return -1;
 
 		try
 		{
+			//TODO: Informationen eintragen in XML
+//			Metadata metadata = com.drew.imaging.ImageMetadataReader.readMetadata(picInput);
+//            com.drew.metadata.exif.ExifDirectory exifDirectory = (ExifDirectory) metadata.getDirectory(com.drew.metadata.exif.ExifDirectory.class);
+//            java.util.Date date = exifDirectory.getDate(com.drew.metadata.exif.ExifDirectory.TAG_DATETIME);
+//			
+//            System.out.println(date);
+			
 			//Uebertrage Daten
 			HttpURLConnection httpCon = transmitBytes("PUT", "name", picName, picInput);
 			
@@ -95,7 +122,7 @@ public class WebserviceConnection
 			httpCon.setRequestMethod(httpType);
 
 			//Stream fuer den Output definieren
-			OutputStream out = httpCon.getOutputStream();
+			BufferedOutputStream out = new BufferedOutputStream(httpCon.getOutputStream(), 1024);
 
 			//Lade immer 1MB grosse Bloecke hoch
 			byte[] data = new byte[1048576];

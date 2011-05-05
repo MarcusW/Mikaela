@@ -66,13 +66,13 @@ public class Index extends HttpServlet
 		ByteArrayOutputStream xml = new ByteArrayOutputStream();
 
 		// fuehre Transformation aus
-		transformator.transform(new StreamResult(xml));
+		//transformator.transform(new StreamResult(xml));
 
-		WebserviceConnection con = new WebserviceConnection("http://141.76.61.48:8103/photos");
+		WebserviceConnection con = new WebserviceConnection("http://141.76.61.48:8103/photos", getServletContext().getRealPath(""));
 		
 		//TODO: Bug mit URL beheben und Informationen hochladen
-		//System.out.println(con.put("/home/marcus/Firefox_wallpaper.png"));
-		//System.out.println(con.put(new URL("http://www.acamedia.info/arts/architecture/braun/PK-G5c.jpg")));
+		//System.out.println(con.put("/home/marcus/amsterdam.jpg"));
+		System.out.println(con.put(new URL("http://www.mmt.inf.tu-dresden.de/Lehre/Sommersemester_11/AWE/Uebung/material/bilder/amsterdam.jpg")));
 		try
 		{
 			// DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
