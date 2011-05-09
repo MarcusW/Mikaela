@@ -56,6 +56,9 @@ public class Index extends HttpServlet
 			return;
 		}
 
+		photonCollector.TransformationHelper.tmpFilePath = getServletContext().getRealPath("");
+		photonCollector.TransformationHelper.webServiceUrl = "http://141.76.61.48:8103/photos";
+		
 		// Generiere ein TransformatorObjekt um die XML-Umwandlung
 		// durchzufuehren
 		Transformator transformator = new Transformator(
@@ -66,34 +69,34 @@ public class Index extends HttpServlet
 		ByteArrayOutputStream xml = new ByteArrayOutputStream();
 
 		// fuehre Transformation aus
-		//transformator.transform(new StreamResult(xml));
+		transformator.transform(new StreamResult(System.out));
 
 		WebserviceConnection con = new WebserviceConnection("http://141.76.61.48:8103/photos", getServletContext().getRealPath(""));
 		
 		//TODO: Bug mit URL beheben und Informationen hochladen
 		//System.out.println(con.put("/home/marcus/amsterdam.jpg"));
-		System.out.println(con.put(new URL("http://www.mmt.inf.tu-dresden.de/Lehre/Sommersemester_11/AWE/Uebung/material/bilder/amsterdam.jpg")));
-		try
-		{
-			// DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
-			// .newDocumentBuilder();
-			// org.w3c.dom.Document doc = docBuilder
-			// .parse(new ByteArrayInputStream(xml.toByteArray()));
-			javax.xml.xpath.XPath x = javax.xml.xpath.XPathFactory
-					.newInstance().newXPath();
-			NodeList selectedNodes = (NodeList) x
-					.evaluate("//pp", new InputSource(new ByteArrayInputStream(
-							xml.toByteArray())), XPathConstants.NODESET);
-
-			StringWriter sw = new StringWriter();
-			Transformer serializer = TransformerFactory.newInstance().newTransformer();
-			serializer.transform(new DOMSource(selectedNodes.item(0)), new StreamResult(sw));
-			System.out.println(sw.toString()); 
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
+		//System.out.println(con.put(new URL("http://www.mmt.inf.tu-dresden.de/Lehre/Sommersemester_11/AWE/Uebung/material/bilder/amsterdam.jpg")));
+//		try
+//		{
+//			// DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
+//			// .newDocumentBuilder();
+//			// org.w3c.dom.Document doc = docBuilder
+//			// .parse(new ByteArrayInputStream(xml.toByteArray()));
+//			javax.xml.xpath.XPath x = javax.xml.xpath.XPathFactory
+//					.newInstance().newXPath();
+//			NodeList selectedNodes = (NodeList) x
+//					.evaluate("//pp", new InputSource(new ByteArrayInputStream(
+//							xml.toByteArray())), XPathConstants.NODESET);
+//
+//			StringWriter sw = new StringWriter();
+//			Transformer serializer = TransformerFactory.newInstance().newTransformer();
+//			serializer.transform(new DOMSource(selectedNodes.item(0)), new StreamResult(sw));
+//			System.out.println(sw.toString()); 
+//		}
+//		catch (Exception ex)
+//		{
+//			ex.printStackTrace();
+//		}
 	}
 
 	/**

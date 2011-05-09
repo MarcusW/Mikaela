@@ -11,6 +11,11 @@ public class WebserviceConnection
 	private String webServiceUrl;
 	private String tmpFilePath;
 
+	public static void test()
+	{
+		System.out.println("hallo welt");
+	}
+	
 	// Constructor
 	public WebserviceConnection(String webServiceUrl, String tmpFilePath)
 	{
