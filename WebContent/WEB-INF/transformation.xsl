@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-
-<xsl:stylesheet version="2.0" xmlns:xhtml="http://www.w3.org/1999/xhtml"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:pp="http://www-mmt.inf.tu-dresden.de/Lehre/Sommersemester_10/Vo_WME/Uebung/material/photonpainter"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	xmlns:java="http://xml.apache.org/xalan/java"
-	xmlns:javaHelper="photonCollector.TransformationHelper"
-	
-	exclude-result-prefixes="xhtml xsl xs java javaHelper">
+<xsl:stylesheet xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pp="http://www-mmt.inf.tu-dresden.de/Lehre/Sommersemester_10/Vo_WME/Uebung/material/photonpainter" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:java="http://xml.apache.org/xalan/java" xmlns:javaHelper="photonCollector.TransformationHelper" version="2.0" exclude-result-prefixes="xhtml xsl xs java javaHelper">
 
 	<xsl:output method="xml" encoding="ISO-8859-1" indent="yes"/>
 	
-	<xsl:strip-space elements="*" />
+	<xsl:strip-space elements="*"/>
 	
 	<xsl:template match="/">
 		<pp>
@@ -61,9 +53,19 @@
 				<!-- Fuer Title muss "Foto " aus dem alt-Attribut des img raus -->
 				<xsl:attribute name="title"><xsl:value-of select="substring(./xhtml:img/@alt,6)"/></xsl:attribute>
 				<!-- Muss aus Bilddatei ausgelesen werden!!! -->
-				<xsl:attribute name="geo_lat"><xsl:value-of select="javaHelper:getMetaInformation('geo_lat', $var_url)"/></xsl:attribute>
+				<xsl:variable name="var_geo_lat">
+					<xsl:value-of select="javaHelper:getMetaInformation('geo_lat', $var_url)"/>
+				</xsl:variable>
+        <xsl:if test="string-length($var_geo_lat) &gt; 0">
+          <xsl:attribute name="geo_lat"><xsl:value-of select="$var_geo_lat"/></xsl:attribute>
+				</xsl:if>
 				<!-- Muss aus Bilddatei ausgelesen werden!!! -->
-				<xsl:attribute name="geo_long"><xsl:value-of select="javaHelper:getMetaInformation('geo_long', $var_url)"/></xsl:attribute>
+				<xsl:variable name="var_geo_long">
+					<xsl:value-of select="javaHelper:getMetaInformation('geo_long', $var_url)"/>
+				</xsl:variable>
+        <xsl:if test="string-length($var_geo_long) &gt; 0">
+				  <xsl:attribute name="geo_long"><xsl:value-of select="$var_geo_long"/></xsl:attribute>
+        </xsl:if>
 				<xsl:attribute name="aperture"><xsl:value-of select="./xhtml:dl/xhtml:dd[3]"/></xsl:attribute>
 				<xsl:attribute name="exposuretime"><xsl:value-of select="./xhtml:dl/xhtml:dd[4]"/></xsl:attribute>
 				<xsl:attribute name="focallength"><xsl:value-of select="./xhtml:dl/xhtml:dd[5]"/></xsl:attribute>

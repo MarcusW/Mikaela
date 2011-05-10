@@ -61,17 +61,20 @@ public class Index extends HttpServlet
 		
 		// Generiere ein TransformatorObjekt um die XML-Umwandlung
 		// durchzufuehren
-		Transformator transformator = new Transformator(
-				getServletContext().getRealPath("/WEB-INF/" + path),
+		Transformator transformatorToUploadDesc = new Transformator(
 				getServletContext().getRealPath("/WEB-INF/transformation.xsl"));
 
+		Transformator transformatorToLog = new Transformator(
+				getServletContext().getRealPath("/WEB-INF/transformation2.xsl"));
+		
 		// Die transformierte XML-Datei
 		ByteArrayOutputStream xml = new ByteArrayOutputStream();
 
 		// fuehre Transformation aus
-		transformator.transform(new StreamResult(System.out));
+		transformatorToUploadDesc.transform(new StreamResult(xml), getServletContext().getRealPath("/WEB-INF/" + path));
 
-		WebserviceConnection con = new WebserviceConnection("http://141.76.61.48:8103/photos", getServletContext().getRealPath(""));
+		transformatorToLog.transform(new StreamResult(System.out), new ByteArrayInputStream(xml.toByteArray()));
+		//WebserviceConnection con = new WebserviceConnection("http://141.76.61.48:8103/photos", getServletContext().getRealPath(""));
 		
 		//TODO: Bug mit URL beheben und Informationen hochladen
 		//System.out.println(con.put("/home/marcus/amsterdam.jpg"));

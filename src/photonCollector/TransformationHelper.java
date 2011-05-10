@@ -12,6 +12,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.*;
 
@@ -41,6 +42,7 @@ public class TransformationHelper
 		try
 		{
 			URL imageUrl = new URL(url);
+			File urlFile = new File(url);
 			BufferedInputStream bufIn = new BufferedInputStream(imageUrl.openStream());
 
 			int dotPos = imageUrl.getPath().lastIndexOf(".");
@@ -48,7 +50,10 @@ public class TransformationHelper
 				return -1; // TODO: Fehler fuer Log
 
 			String filepath = tmpFilePath + "/tmp" + imageUrl.getPath().substring(dotPos);
-
+			File tmpFile = new File(filepath);
+			if(tmpFile.exists())
+				tmpFile.delete();
+			
 			java.io.FileOutputStream fos = new java.io.FileOutputStream(filepath, false);
 			java.io.BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
 			byte data[] = new byte[1024];
@@ -61,7 +66,7 @@ public class TransformationHelper
 			fos.close();
 			bufIn.close();
 
-			return put(filepath);
+			return put(filepath, urlFile.getName());
 		}
 		catch (Exception e)
 		{
@@ -70,12 +75,12 @@ public class TransformationHelper
 		}
 	}
 
-	private static int put(String localImagePath)
+	private static int put(String localImagePath, String fileName)
 	{
 		File f = new File(localImagePath);
 		try
 		{
-			return put(new BufferedInputStream(new FileInputStream(f)), f.getName());
+			return put(new BufferedInputStream(new FileInputStream(f)), fileName);
 		}
 		catch (Exception e)
 		{
@@ -153,7 +158,6 @@ public class TransformationHelper
 	public static String getMetaInformation(String name, String url)
 	{
 		BufferedInputStream picInput = null;
-		System.out.println("name:" + name + "; url:" + url);
 		try
 		{
 			int dotPos = url.lastIndexOf(".");
@@ -163,17 +167,25 @@ public class TransformationHelper
 				return "";
 			picInput = new BufferedInputStream(new FileInputStream(jpgFile));
 			Metadata metadata = com.drew.imaging.ImageMetadataReader.readMetadata(picInput);
-			com.drew.metadata.exif.ExifDirectory exifDirectory = (ExifDirectory) metadata.getDirectory(com.drew.metadata.exif.ExifDirectory.class);
 
-			if (name.equals("geo_lat"))
-			{
-				GpsDescriptor gps = (GpsDescriptor)exifDirectory.getObject(com.drew.metadata.exif.ExifDirectory.TAG_GPS_INFO);
-				return gps == null ? "" : gps.getGpsLatitudeDescription();
+			Directory gpsDir = metadata.getDirectory(GpsDirectory.class);
+			if (name.equals("geo_lat")&&gpsDir != null)
+			{	
+				String latitude = gpsDir.getDescription(GpsDirectory.TAG_GPS_LATITUDE);
+				String latitudeRef = gpsDir.getDescription(GpsDirectory.TAG_GPS_LATITUDE_REF);
+				if(latitude == null)
+					return "";
+				double res = convertHourToDecimal(latitude);
+				return latitudeRef.equalsIgnoreCase("S") ? String.valueOf(-res) : String.valueOf(res);
 			}
-			if (name.equals("geo_long"))
+			if (name.equals("geo_long")&&gpsDir != null)
 			{
-				GpsDescriptor gps = (GpsDescriptor)exifDirectory.getObject(com.drew.metadata.exif.ExifDirectory.TAG_GPS_INFO);
-				return gps == null ? "" : gps.getGpsLongitudeDescription();
+				String longitude = gpsDir.getDescription(GpsDirectory.TAG_GPS_LONGITUDE);
+				String longitudeRef = gpsDir.getDescription(GpsDirectory.TAG_GPS_LONGITUDE_REF);
+				if(longitude == null)
+					return "";
+				double res = convertHourToDecimal(longitude);
+				return longitudeRef.equalsIgnoreCase("W") ? String.valueOf(-res) : String.valueOf(res);
 			}
 			picInput.close();
 		}
@@ -193,5 +205,12 @@ public class TransformationHelper
 		}
 		
 		return "";
+	}
+	
+	private static double convertHourToDecimal(String degree) {
+	    if(!degree.matches("(-)?([0-6])?[0-9]\"[0-6][0-9]\'([0-6])?[0-9](.[0-9]{1,9})?"))
+	        return 0;
+	    String[] strArray=degree.split("[\"']");
+	    return Double.parseDouble(strArray[0])+Double.parseDouble(strArray[1])/60+Double.parseDouble(strArray[2])/3600;
 	}
 }

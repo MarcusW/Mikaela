@@ -1,12 +1,13 @@
 package photonCollector;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
@@ -20,23 +21,11 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class Transformator
 {
-	private String xmlFilePath;
 	private String xslFilePath;
 	
-	public Transformator(String xmlFilePath, String xslFilePath)
+	public Transformator(String xslFilePath)
 	{
-		this.xmlFilePath = xmlFilePath;
 		this.xslFilePath = xslFilePath;
-	}
-	
-	public String getXmlFilePath()
-	{
-		return xmlFilePath;
-	}
-	
-	public void setXmlFilePath(String xmlFilePath)
-	{
-		this.xmlFilePath = xmlFilePath;
 	}
 	
 	public String getXslFilePath()
@@ -49,15 +38,28 @@ public class Transformator
 		this.xslFilePath = xslFilePath;
 	}
 	
-	public void transform(StreamResult resStream)
+	public void transform(StreamResult resStream, String xmlFilePath)
 	{
 		// Verweise auf die Ausgangs- und Transformationsdatei
 		File xhtmlFile = new File(xmlFilePath);
+		try
+		{
+			InputStream inStream = new FileInputStream(xhtmlFile);
+			transform(resStream, inStream);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void transform(StreamResult resStream, InputStream inStream)
+	{
 		File xsltFile = new File(xslFilePath);
-
 		// JAXP liest Daten über die Source-Schnittstelle
 		Source xsltSource = new StreamSource(xsltFile);
-
+		
 		try
 		{
 			// Reader um Doctype-Problem zu umgehen
@@ -78,9 +80,9 @@ public class Transformator
 					}
 				}
 			});
-
+			
 			SAXSource xmlSource = new SAXSource(reader, new InputSource(
-					xhtmlFile.getAbsolutePath()));
+					inStream));
 
 			// Führe Transformation aus
 			SAXTransformerFactory transFact = (SAXTransformerFactory) SAXTransformerFactory.newInstance();
@@ -89,6 +91,7 @@ public class Transformator
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 	}
 }
