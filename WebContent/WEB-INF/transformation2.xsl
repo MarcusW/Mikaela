@@ -15,7 +15,7 @@
 	<xsl:template match="photocontainer">
 		<!-- Entscheinde Variable, ob Metadaten hochgeladen werden soll oder nicht -->
 		<xsl:variable name="var_descision">
-			<xsl:text>1</xsl:text>
+			<xsl:number>1</xsl:number>
 		</xsl:variable>
 		<xsl:variable name="var_uploaded">
 			<xsl:text>false</xsl:text>
@@ -24,7 +24,7 @@
 		
 		<xsl:if test="count(log/error) &gt; 0">
 			<xsl:variable name="var_descision">
-				<xsl:text>0</xsl:text>
+				<xsl:number>0</xsl:number>
 			</xsl:variable>
 		</xsl:if>
 		
@@ -39,11 +39,9 @@
 			<warning><xsl:value-of select="." /></warning>
 			</xsl:for-each>
 			
-			<xsl:if test="number($var_descision) = number('1')">
-				<xsl:variable name="var_uploaded">
-					<xsl:value-of select="boolean(javaHelper:uploadMetadata(number(@id), photo))"/>
-				</xsl:variable>
-			</xsl:if>
+			<xsl:variable name="var_uploaded">
+				<xsl:value-of select="boolean(javaHelper:uploadMetadata(number(@id), photo))"/>
+			</xsl:variable>
 			<result>			
 				<xsl:text>Der Upload des Bildes war </xsl:text>
 				<xsl:if test="string($var_uploaded) = 'false'">

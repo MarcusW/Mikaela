@@ -50,35 +50,91 @@ public class TransformationHelper
 	 */
 	public static boolean checkPropertyFile()
 	{
-		//TODO: Testen der Werte
+		if(getWebserviceUrl().equals(""))
+		{
+			System.err.println("Kein Webserver fuer Upload angegeben.");
+			return false;
+		}
+		
+		File firstXsl = new File(getFirstXslPath());
+		File secondXsl = new File(getSecondXslPath());
+		File xhtmlFile = new File(getXhtmlPath());
+		File tmpDir = new File(getTmpFolderPath());
+		
+		if(!firstXsl.exists())
+		{
+			System.err.println("xsl_xhtmlToXml existiert nicht.");
+			return false;
+		}
+		if(!secondXsl.exists())
+		{
+			System.err.println("xsl_xmlToLog existiert nicht.");
+			return false;
+		}
+		if(!xhtmlFile.exists())
+		{
+			System.err.println("xhtml_file existiert nicht.");
+			return false;
+		}
+		if(!tmpDir.exists())
+		{
+			System.err.println("tmp_folder existiert nicht.");
+			return false;
+		}
+		
 		return true;
 	}
 	
+	/**
+	 * Gibt die Url des Webservice zurueck auf den die Photos hochgeladen werden sollen.
+	 * @return Die Url des Webservice.
+	 */
 	public static String getWebserviceUrl()
 	{
 		return getPropertyInformation("web_url");
 	}
 	
+	/**
+	 * Gibt den absoluten Pfad zur Transformationsdatei Xhtml -> Xml zurueck.
+	 * @return Der absolute Dateipfad.
+	 */
 	public static String getFirstXslPath()
 	{
 		return currentPath + "/" + getPropertyInformation("xsl_xhtmlToXml");
 	}
 	
+	/**
+	 * Gibt den absoluten Pfad zur Transformationsdatei Xml -> XmlLog zurueck.
+	 * @return Der absolute Dateipfad.
+	 */
 	public static String getSecondXslPath()
 	{
 		return currentPath + "/" + getPropertyInformation("xsl_xmlToLog");
 	}
 	
+	/**
+	 * Gibt den absoluten Pfad zur Xhtml-Datei zurueck die transformiert werden soll.
+	 * @return Der absolute Dateipfad.
+	 */
 	public static String getXhtmlPath()
 	{
 		return currentPath + "/" + getPropertyInformation("xhtml_file");
 	}
 	
+	/**
+	 * Gibt den absoluten Pfad zum Ordner zurueck indem einzelne Bilder abgelegt werden koennen.
+	 * @return Der absolute Dateipfad.
+	 */
 	private static String getTmpFolderPath()
 	{
 		return currentPath + "/" + getPropertyInformation("tmp_folder");
 	}
 	
+	/**
+	 * Liest einen Eintrag aus der Konfigurationsdatei aus.
+	 * @param name Der Name der gesuchten Eigenschaft.
+	 * @return Der Wert welcher Der Eigenschaft zugewiesen wurde. Der <code>String</code> ist leer falls die Eigenschaft nicht ausgelesen werden konnte.
+	 */
 	private static String getPropertyInformation(String name)
 	{
 		Properties properties = new Properties();
@@ -118,6 +174,7 @@ public class TransformationHelper
 		return -1;
 	}
 
+	
 	/**
 	 * Laedt das Bild mit der angegebenen ID zum Webservice hoch.
 	 * 
@@ -188,6 +245,7 @@ public class TransformationHelper
 		}
 	}
 
+	
 	/**
 	 * Fuehrt einen Http-Putbefehl auf dem Webservice aus.
 	 * 
@@ -227,6 +285,7 @@ public class TransformationHelper
 		return 0;
 	}
 
+	
 	/**
 	 * Laedt die Metadaten eines Bildes zum Webservice hoch.
 	 * 
@@ -335,6 +394,7 @@ public class TransformationHelper
 		return httpCon;
 	}
 
+	
 	/**
 	 * Liest Exif-Informationen aus dem zuletzt hochgeladenem Bild aus.
 	 * 

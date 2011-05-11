@@ -12,6 +12,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import photonCollector.TransformationHelper;
 import photonCollector.Transformator;
+import test.TransformationHelperForTesting;
 
 /**
  * Servlet implementation class Index
@@ -40,20 +41,26 @@ public class Index extends HttpServlet
 		//Das Arbeitsverzeichnis ablegen
 		TransformationHelper.currentPath = getServletContext().getRealPath("");
 		
-		//Ueberprufe Property-Datei
+		//Ueberpruefe Property-Datei
 		if(!TransformationHelper.checkPropertyFile())
 		{
 			writer.write("<log><error>Die Konfigurationsdatei ist fehlerhaft.</error></log>");
 			return;
 		}
-
+		
+		String path = request.getParameter("delete");
+		
+		//Falls delete=1 angehangen wird, werden die default-photos entfernt vom Webserver
+		if(path != null && path.equals("1"))
+			TransformationHelperForTesting.deleteAllPhotos();
+		
 		// Transformationsschritt 1 laedt das Bild hoch und gibt eine Xml-Datei
 		// zurueck welche alle zu aktualisierenden Photos enthaelt.
-		Transformator transformatorToUploadDesc = new Transformator(getServletContext().getRealPath("/WEB-INF/transformation.xsl"));
+		Transformator transformatorToUploadDesc = new Transformator(TransformationHelper.getFirstXslPath());
 
 		// Transformationsschritt 2 laedt alle Metainformationen zum Server hoch
 		// und erzeugt eine Log-Xml.
-		Transformator transformatorToLog = new Transformator(getServletContext().getRealPath("/WEB-INF/transformation2.xsl"));
+		Transformator transformatorToLog = new Transformator(TransformationHelper.getSecondXslPath());
 
 		// Die XML-Datei welche alle zu aktualisierenden Photos enthaelt.
 		ByteArrayOutputStream uploadXml = new ByteArrayOutputStream();
