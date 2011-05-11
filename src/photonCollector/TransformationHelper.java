@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -30,10 +31,68 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.GpsDirectory;
 
+/**
+ * Diese Klasse bietet statische Funktionen an um alle Uploadvorgaenge
+ * ermoeglichen zu koennen.
+ * 
+ * @author marcus
+ * 
+ */
 public class TransformationHelper
 {
-	public static String tmpFilePath;
-	public static String webServiceUrl;
+	public static String currentPath;
+
+	/**
+	 * Ueberprueft ob die Datei config.prop korrekt strukturiert ist.
+	 * 
+	 * @return Gibt <code>true</code> zurueck falls alle benoetigten
+	 *         Eigenschaften enthalten und korrekt sind.
+	 */
+	public static boolean checkPropertyFile()
+	{
+		//TODO: Testen der Werte
+		return true;
+	}
+	
+	public static String getWebserviceUrl()
+	{
+		return getPropertyInformation("web_url");
+	}
+	
+	public static String getFirstXslPath()
+	{
+		return currentPath + "/" + getPropertyInformation("xsl_xhtmlToXml");
+	}
+	
+	public static String getSecondXslPath()
+	{
+		return currentPath + "/" + getPropertyInformation("xsl_xmlToLog");
+	}
+	
+	public static String getXhtmlPath()
+	{
+		return currentPath + "/" + getPropertyInformation("xhtml_file");
+	}
+	
+	private static String getTmpFolderPath()
+	{
+		return currentPath + "/" + getPropertyInformation("tmp_folder");
+	}
+	
+	private static String getPropertyInformation(String name)
+	{
+		Properties properties = new Properties();
+		try
+		{
+			properties.load(new FileInputStream(currentPath + "/WEB-INF/config.prop"));
+			return properties.get(name).toString();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return "";
+	}
 
 	/**
 	 * Wandelt einen Zeitstring in Unixzeit um.
@@ -79,7 +138,7 @@ public class TransformationHelper
 			if (dotPos < 0)
 				return -1;
 
-			String filepath = tmpFilePath + "/tmp" + imageUrl.getPath().substring(dotPos);
+			String filepath = getTmpFolderPath() + "/tmp" + imageUrl.getPath().substring(dotPos);
 			File tmpFile = new File(filepath);
 			if (tmpFile.exists())
 				tmpFile.delete();
@@ -107,9 +166,13 @@ public class TransformationHelper
 
 	/**
 	 * Fuehrt einen Http-Putbefehl auf dem Webservice aus.
-	 * @param localImagePath Der Pfad des lokal gespeicherten Bildes.
-	 * @param picName Der Name des Bildes.
-	 * @return Die vom Webservice zurueckgelieferte ID. Gibt <code>-1</code> falls ein Fehler aufgetreten ist.
+	 * 
+	 * @param localImagePath
+	 *            Der Pfad des lokal gespeicherten Bildes.
+	 * @param picName
+	 *            Der Name des Bildes.
+	 * @return Die vom Webservice zurueckgelieferte ID. Gibt <code>-1</code>
+	 *         falls ein Fehler aufgetreten ist.
 	 */
 	private static int put(String localImagePath, String picName)
 	{
@@ -127,9 +190,13 @@ public class TransformationHelper
 
 	/**
 	 * Fuehrt einen Http-Putbefehl auf dem Webservice aus.
-	 * @param picInput Der zu uebertragene Stream.
-	 * @param picName Der Name des Bildes.
-	 * @return Die vom Webservice zurueckgelieferte ID. Gibt <code>-1</code> falls ein Fehler aufgetreten ist.
+	 * 
+	 * @param picInput
+	 *            Der zu uebertragene Stream.
+	 * @param picName
+	 *            Der Name des Bildes.
+	 * @return Die vom Webservice zurueckgelieferte ID. Gibt <code>-1</code>
+	 *         falls ein Fehler aufgetreten ist.
 	 */
 	private static int put(BufferedInputStream picInput, String picName)
 	{
@@ -162,9 +229,13 @@ public class TransformationHelper
 
 	/**
 	 * Laedt die Metadaten eines Bildes zum Webservice hoch.
-	 * @param id Die ID des Bildes.
-	 * @param nodes Die xml-knoten welche die Metadaten representieren.
-	 * @return Gibt <code>true</code> zurueck falls der Server mit Http 200 geantwortet hat.
+	 * 
+	 * @param id
+	 *            Die ID des Bildes.
+	 * @param nodes
+	 *            Die xml-knoten welche die Metadaten representieren.
+	 * @return Gibt <code>true</code> zurueck falls der Server mit Http 200
+	 *         geantwortet hat.
 	 */
 	public static boolean uploadMetadata(int id, NodeList nodes)
 	{
@@ -187,7 +258,7 @@ public class TransformationHelper
 			String xmlString = output.toString();
 
 			InputStream inputStream = new ByteArrayInputStream(xmlString.getBytes());
-			
+
 			HashMap<String, String> requestProperties = new HashMap<String, String>();
 			requestProperties.put("Content-Type", "text/xml");
 
@@ -205,12 +276,22 @@ public class TransformationHelper
 
 	/**
 	 * Uebertraegt Daten via Http zum Webserver.
-	 * @param httpType Der Http-Type wie zum Beispiel <code>PUT</code>.
-	 * @param addressAttribute Ein zusaetzliches Attribut welches an die Url angehangen werden kann. Beispiel: <code>id</code>.
-	 * @param attributeValue Der Wert den das <code>addressAttribute</code> haben soll.
-	 * @param content Die zu uebertragenen Daten.
-	 * @param requestProperties Zusaetzliche Properties die fuer die Uebertragung gesetzt werden koennen. Geben sie <code>null</code> an falls keine Werte benoetigt werden.
-	 * @return Das UrlConnection-Objekt aus welchem die Antwort bzw. der Statuscode ausgelesen werden kann.
+	 * 
+	 * @param httpType
+	 *            Der Http-Type wie zum Beispiel <code>PUT</code>.
+	 * @param addressAttribute
+	 *            Ein zusaetzliches Attribut welches an die Url angehangen
+	 *            werden kann. Beispiel: <code>id</code>.
+	 * @param attributeValue
+	 *            Der Wert den das <code>addressAttribute</code> haben soll.
+	 * @param content
+	 *            Die zu uebertragenen Daten.
+	 * @param requestProperties
+	 *            Zusaetzliche Properties die fuer die Uebertragung gesetzt
+	 *            werden koennen. Geben sie <code>null</code> an falls keine
+	 *            Werte benoetigt werden.
+	 * @return Das UrlConnection-Objekt aus welchem die Antwort bzw. der
+	 *         Statuscode ausgelesen werden kann.
 	 */
 	private static HttpURLConnection transmitBytes(String httpType, String addressAttribute, String attributeValue, InputStream content, Map<String, String> requestProperties)
 	{
@@ -218,18 +299,18 @@ public class TransformationHelper
 		try
 		{
 			// Url des Webservice erstellen
-			URL url = new URL(webServiceUrl + "?" + addressAttribute + "=" + attributeValue);
+			URL url = new URL(getWebserviceUrl() + "?" + addressAttribute + "=" + attributeValue);
 
 			// Verbindung aufbauen und den Typ setzen
 			httpCon = (HttpURLConnection) url.openConnection();
 			httpCon.setDoOutput(true);
 			httpCon.setRequestMethod(httpType);
 
-			//Alle Uebertragungseigenschaften festlegen
-			if(requestProperties != null)
+			// Alle Uebertragungseigenschaften festlegen
+			if (requestProperties != null)
 				for (String value : requestProperties.keySet())
 					httpCon.setRequestProperty(value, requestProperties.get(value));
-			
+
 			// Stream fuer den Output definieren
 			BufferedOutputStream out = new BufferedOutputStream(httpCon.getOutputStream(), 1024);
 
@@ -256,9 +337,15 @@ public class TransformationHelper
 
 	/**
 	 * Liest Exif-Informationen aus dem zuletzt hochgeladenem Bild aus.
-	 * @param name Der Name der Exif-Information die ausgelesen werden soll. Derzeit wird nur <code>geo_lat</code> und <code>geo_long</code> unterstuetzt.
-	 * @param url Die Url des Bildes.
-	 * @return Der ausgelesene Wert. Der <code>String</code> ist leer falls die Information nicht ausgelesen werden konnte.
+	 * 
+	 * @param name
+	 *            Der Name der Exif-Information die ausgelesen werden soll.
+	 *            Derzeit wird nur <code>geo_lat</code> und
+	 *            <code>geo_long</code> unterstuetzt.
+	 * @param url
+	 *            Die Url des Bildes.
+	 * @return Der ausgelesene Wert. Der <code>String</code> ist leer falls die
+	 *         Information nicht ausgelesen werden konnte.
 	 */
 	public static String getMetaInformation(String name, String url)
 	{
@@ -267,7 +354,7 @@ public class TransformationHelper
 		{
 			int dotPos = url.lastIndexOf(".");
 
-			File jpgFile = new File(tmpFilePath + "/tmp" + url.substring(dotPos));
+			File jpgFile = new File(getTmpFolderPath() + "/tmp" + url.substring(dotPos));
 			if (!jpgFile.exists()) // Datei existiert nicht
 				return "";
 			picInput = new BufferedInputStream(new FileInputStream(jpgFile));
@@ -314,7 +401,9 @@ public class TransformationHelper
 
 	/**
 	 * Konvertiert eine GPS-Minutenangabe in Grad.
-	 * @param degree Die GPS-Minutenangabe.
+	 * 
+	 * @param degree
+	 *            Die GPS-Minutenangabe.
 	 * @return Der ermittelte Gradwert.
 	 */
 	private static double convertHourToDecimal(String degree)

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.stream.StreamResult;
 
+import photonCollector.TransformationHelper;
 import photonCollector.Transformator;
 
 /**
@@ -29,43 +30,51 @@ public class Index extends HttpServlet
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		PrintWriter writer = response.getWriter();
-
-		// Versuche Pfad zu xhtml-datei auszulesen - Root ist dabei WebContent
-		String path = request.getParameter("path");
-
-		// Falls der Pfad nich spezifiziert wurde, so breche ab
-		if (path == null)
+		
+		//Das Arbeitsverzeichnis ablegen
+		TransformationHelper.currentPath = getServletContext().getRealPath("");
+		
+		//Ueberprufe Property-Datei
+		if(!TransformationHelper.checkPropertyFile())
 		{
-			writer.write("<log><error>Pfad nicht angegeben.</error></log>");
+			writer.write("<log><error>Die Konfigurationsdatei ist fehlerhaft.</error></log>");
 			return;
 		}
 
-		photonCollector.TransformationHelper.tmpFilePath = getServletContext().getRealPath("");
-		photonCollector.TransformationHelper.webServiceUrl = "http://141.76.61.48:8103/photos";
-		
-		//Transformationsschritt 1 laedt das Bild hoch und gibt eine Xml-Datei zurueck welche alle zu aktualisierenden Photos enthaelt.
+		// Transformationsschritt 1 laedt das Bild hoch und gibt eine Xml-Datei
+		// zurueck welche alle zu aktualisierenden Photos enthaelt.
 		Transformator transformatorToUploadDesc = new Transformator(getServletContext().getRealPath("/WEB-INF/transformation.xsl"));
 
-		//Transformationsschritt 2 laedt alle Metainformationen zum Server hoch und erzeugt eine Log-Xml.
+		// Transformationsschritt 2 laedt alle Metainformationen zum Server hoch
+		// und erzeugt eine Log-Xml.
 		Transformator transformatorToLog = new Transformator(getServletContext().getRealPath("/WEB-INF/transformation2.xsl"));
-		
-		//Die XML-Datei welche alle zu aktualisierenden Photos enthaelt.
+
+		// Die XML-Datei welche alle zu aktualisierenden Photos enthaelt.
 		ByteArrayOutputStream uploadXml = new ByteArrayOutputStream();
 
-		//Die XML-Datei welche alle Logausgaben der Transformationen enthaelt.
+		// Die XML-Datei welche alle Logausgaben der Transformationen enthaelt.
 		ByteArrayOutputStream logXml = new ByteArrayOutputStream();
-		
-		//Fuehre die beiden Transformationen aus
-		transformatorToUploadDesc.transform(new StreamResult(uploadXml), getServletContext().getRealPath("/WEB-INF/" + path));
 
-		transformatorToLog.transform(new StreamResult(logXml), new ByteArrayInputStream(uploadXml.toByteArray()));
+		// Fuehre die beiden Transformationen aus
+		if (!transformatorToUploadDesc.transform(new StreamResult(uploadXml), TransformationHelper.getXhtmlPath()))
+		{
+			writer.write("<log><error>Die Photos konnten nicht aus der Xhtml-Datei extrahiert werden.</error></log>");
+			return;
+		}
+
+		if (!transformatorToLog.transform(new StreamResult(logXml), new ByteArrayInputStream(uploadXml.toByteArray())))
+		{
+			writer.write("<log><error>Die Loginformationen konnten nicht aus der Photos-Xml extrahiert werden.</error></log>");
+			return;
+		}
 		
-		//Ausgeben der Logdatei
+		// Ausgeben der Logdatei
 		writer.write(logXml.toString());
 	}
 }

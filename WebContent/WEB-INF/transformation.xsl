@@ -137,9 +137,11 @@
 								<xsl:text>1</xsl:text>
 							</xsl:attribute>
 							
-							<xsl:attribute name="author">
-								<xsl:value-of select="$var_userID" />
-							</xsl:attribute>
+							<xsl:if test="$var_userID &gt; -1">
+								<xsl:attribute name="author">
+									<xsl:value-of select="$var_userID" />
+								</xsl:attribute>
+							</xsl:if>
 							<tags>
 								<xsl:for-each select="./xhtml:dl/xhtml:dd[7]/xhtml:ul/xhtml:li">
 									<tag>
@@ -184,7 +186,7 @@
 							<warning>
 								<xsl:text>Die Nutzer: </xsl:text>
 								<xsl:value-of select="$var_author" />
-								<xsl:text> ist im System nicht registriert. Es wird -1 als author eingetragen.</xsl:text>
+								<xsl:text> ist im System nicht registriert. Das entsprechende Attribut wird weggelassen.</xsl:text>
 							</warning>
 						</xsl:if>			
 					</log>

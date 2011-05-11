@@ -6,19 +6,51 @@
 	xmlns:java="http://xml.apache.org/xalan/java" 
 	xmlns:javaHelper="photonCollector.TransformationHelper" 
 	version="2.0" 
-	exclude-result-prefixes="xsl xs java javaHelper">
+	exclude-result-prefixes="xsl xs java javaHelper pp">
 	<xsl:template match="/">
-		<log>
+		<logs>
 			<xsl:apply-templates select="*"/>
-		</log>
+		</logs>
 	</xsl:template>
 	<xsl:template match="photocontainer">
-		<xsl:variable name="photoNode">
-			<xsl:copy-of select="photo"></xsl:copy-of>
+		<!-- Entscheinde Variable, ob Metadaten hochgeladen werden soll oder nicht -->
+		<xsl:variable name="var_descision">
+			<xsl:text>1</xsl:text>
 		</xsl:variable>
 		<xsl:variable name="var_uploaded">
-			<xsl:value-of select="boolean(javaHelper:push(number(@id), photo))"/>
+			<xsl:text>false</xsl:text>
 		</xsl:variable>
-		<xsl:value-of select="$var_uploaded"/>		
+		
+		
+		<xsl:if test="count(log/error) &gt; 0">
+			<xsl:variable name="var_descision">
+				<xsl:text>0</xsl:text>
+			</xsl:variable>
+		</xsl:if>
+		
+		<log>
+			<xsl:attribute name="picture">
+				<xsl:value-of select="log/@picture"/>
+			</xsl:attribute>
+			<xsl:for-each select="log/error">
+			<error><xsl:value-of select="." /></error>
+			</xsl:for-each>
+			<xsl:for-each select="log/warning">
+			<warning><xsl:value-of select="." /></warning>
+			</xsl:for-each>
+			
+			<xsl:if test="number($var_descision) = number('1')">
+				<xsl:variable name="var_uploaded">
+					<xsl:value-of select="boolean(javaHelper:uploadMetadata(number(@id), photo))"/>
+				</xsl:variable>
+			</xsl:if>
+			<result>			
+				<xsl:text>Der Upload des Bildes war </xsl:text>
+				<xsl:if test="string($var_uploaded) = 'false'">
+					<xsl:text>NICHT </xsl:text>
+				</xsl:if>
+				<xsl:text>erfolgreich!</xsl:text>
+			</result>
+		</log>
 	</xsl:template>
 </xsl:stylesheet>

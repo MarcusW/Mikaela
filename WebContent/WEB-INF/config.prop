@@ -1,0 +1,17 @@
+#Achtung: Alle Pfade relativ zum Arbeitsverzeichnis
+
+# Der Pfad zur xhtml-Datei die transformiert werden soll
+xhtml_file=WEB-INF/test.xhtml
+
+# Der Pfad zu einem Temporaeren Ordner indem ein Bild zwischengespeichert werden kann.
+# Dies ist notwendig um z.B. Geoinformationen auszulesen
+tmp_folder=
+
+# Der Name der Transformationsdatei der ersten Stufe
+xsl_xhtmlToXml=WEB-INF/transformation.xsl
+
+# Der Name der Transformationsdatei der zweiten Stufe
+xsl_xmlToLog=WEB-INF/transformation2.xsl
+
+#Url des Webservices
+web_url=http://141.76.61.48:8103/photos
