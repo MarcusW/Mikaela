@@ -8,13 +8,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -37,9 +37,11 @@ public class TransformationHelper
 
 	/**
 	 * Wandelt einen Zeitstring in Unixzeit um.
-	 * @param time Der Zeitstring der Form dd.MM.yy 
-	 * @return Die berechnete Unixzeit.</br>
-	 * Der Wert ist <code>-1</code> falls ein Fehler aufgetreten ist.
+	 * 
+	 * @param time
+	 *            Der Zeitstring der Form dd.MM.yy
+	 * @return Die berechnete Unixzeit.</br> Der Wert ist <code>-1</code> falls
+	 *         ein Fehler aufgetreten ist.
 	 */
 	public static long dateToUnixTimestamp(String time)
 	{
@@ -58,10 +60,12 @@ public class TransformationHelper
 	}
 
 	/**
-	 * Laedt das Bild mit der angegebenen ID zum Webservice hoch. 
-	 * @param url Die url unter der das Bild erreichbar ist.
-	 * @return Die ID welche vom Webservice vergeben wurde. </br>
-	 * Der Wert betraegt <code>-1</code> falls ein Fehler aufgetreten ist.
+	 * Laedt das Bild mit der angegebenen ID zum Webservice hoch.
+	 * 
+	 * @param url
+	 *            Die url unter der das Bild erreichbar ist.
+	 * @return Die ID welche vom Webservice vergeben wurde. </br> Der Wert
+	 *         betraegt <code>-1</code> falls ein Fehler aufgetreten ist.
 	 */
 	public static int uploadImage(String url)
 	{
@@ -77,9 +81,9 @@ public class TransformationHelper
 
 			String filepath = tmpFilePath + "/tmp" + imageUrl.getPath().substring(dotPos);
 			File tmpFile = new File(filepath);
-			if(tmpFile.exists())
+			if (tmpFile.exists())
 				tmpFile.delete();
-			
+
 			java.io.FileOutputStream fos = new java.io.FileOutputStream(filepath, false);
 			java.io.BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
 			byte data[] = new byte[1024];
@@ -101,12 +105,18 @@ public class TransformationHelper
 		}
 	}
 
-	private static int put(String localImagePath, String fileName)
+	/**
+	 * Fuehrt einen Http-Putbefehl auf dem Webservice aus.
+	 * @param localImagePath Der Pfad des lokal gespeicherten Bildes.
+	 * @param picName Der Name des Bildes.
+	 * @return Die vom Webservice zurueckgelieferte ID. Gibt <code>-1</code> falls ein Fehler aufgetreten ist.
+	 */
+	private static int put(String localImagePath, String picName)
 	{
 		File f = new File(localImagePath);
 		try
 		{
-			return put(new BufferedInputStream(new FileInputStream(f)), fileName);
+			return put(new BufferedInputStream(new FileInputStream(f)), picName);
 		}
 		catch (Exception e)
 		{
@@ -115,6 +125,12 @@ public class TransformationHelper
 		}
 	}
 
+	/**
+	 * Fuehrt einen Http-Putbefehl auf dem Webservice aus.
+	 * @param picInput Der zu uebertragene Stream.
+	 * @param picName Der Name des Bildes.
+	 * @return Die vom Webservice zurueckgelieferte ID. Gibt <code>-1</code> falls ein Fehler aufgetreten ist.
+	 */
 	private static int put(BufferedInputStream picInput, String picName)
 	{
 		if (picInput == null || picName == null)
@@ -123,7 +139,7 @@ public class TransformationHelper
 		try
 		{
 			// Uebertrage Daten
-			HttpURLConnection httpCon = transmitBytes("PUT", "name", picName, picInput);
+			HttpURLConnection httpCon = transmitBytes("PUT", "name", picName, picInput, null);
 
 			// Frage zugewiesene ID ab
 			BufferedReader br = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
@@ -144,57 +160,59 @@ public class TransformationHelper
 		return 0;
 	}
 
-	public static boolean push(int id, NodeList nodes)
+	/**
+	 * Laedt die Metadaten eines Bildes zum Webservice hoch.
+	 * @param id Die ID des Bildes.
+	 * @param nodes Die xml-knoten welche die Metadaten representieren.
+	 * @return Gibt <code>true</code> zurueck falls der Server mit Http 200 geantwortet hat.
+	 */
+	public static boolean uploadMetadata(int id, NodeList nodes)
 	{
 		try
 		{
 			Document newXmlDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-		    
-	        for (int i = 0; i < nodes.getLength(); i++) 
-	        {
-	            Node node = nodes.item(i);
-	            Node copyNode = newXmlDocument.importNode(node, true);
-	            newXmlDocument.appendChild(copyNode);
-	        }
 
-	        StringWriter output = new StringWriter();
-
-	        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-	        transformer.transform(new DOMSource(nodes.item(0)), new StreamResult(output));
-
-	        String xmlString = output.toString();
-
-		    String xmltmp = "<photo created=\"1302011614\" title=\"Catedral del buen pastor\" geo_lat=\"43.31721809\" geo_long=\"-1.98207736000229\" aperture=\"F/8\" exposuretime=\"1/250s\" focallength=\"24mm\"";
-		    xmltmp += " user_name=\"MaNi\" author=\"1\" upload_complete=\"1\">";
-		    xmltmp += "<tags>";
-		    xmltmp += "<tag>Architektur</tag>";
-		    xmltmp += "<tag>Donostia</tag>";
-		    xmltmp += "</tags>";
-		    xmltmp += "<description>Kathedrale in Donostia, Spanien.</description>";
-		    xmltmp += "</photo>";
-		    InputStream inputStream = new ByteArrayInputStream(xmltmp.getBytes());
-		    
-		    //return transmitBytes("POST", "id", String.valueOf(id), inputStream) != null;
-            
-			// Frage ReturnCode ab
-			BufferedReader br = new BufferedReader(new InputStreamReader(transmitBytes("POST", "id", String.valueOf(id), inputStream).getInputStream()));
-			String str;
-			StringBuffer sb = new StringBuffer();
-			while ((str = br.readLine()) != null)
+			for (int i = 0; i < nodes.getLength(); i++)
 			{
-				sb.append(str);
+				Node node = nodes.item(i);
+				Node copyNode = newXmlDocument.importNode(node, true);
+				newXmlDocument.appendChild(copyNode);
 			}
-			br.close();
-		    return true;
+
+			StringWriter output = new StringWriter();
+
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			transformer.transform(new DOMSource(nodes.item(0)), new StreamResult(output));
+
+			String xmlString = output.toString();
+
+			InputStream inputStream = new ByteArrayInputStream(xmlString.getBytes());
+			
+			HashMap<String, String> requestProperties = new HashMap<String, String>();
+			requestProperties.put("Content-Type", "text/xml");
+
+			// Frage ReturnCode ab
+			HttpURLConnection httpCon = transmitBytes("POST", "id", String.valueOf(id), inputStream, requestProperties);
+
+			return httpCon.getResponseCode() == 200;
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			ex.printStackTrace();
 		}
 		return false;
 	}
-	
-	private static HttpURLConnection transmitBytes(String httpType, String addressAttribute, String attributeValue, InputStream content)
+
+	/**
+	 * Uebertraegt Daten via Http zum Webserver.
+	 * @param httpType Der Http-Type wie zum Beispiel <code>PUT</code>.
+	 * @param addressAttribute Ein zusaetzliches Attribut welches an die Url angehangen werden kann. Beispiel: <code>id</code>.
+	 * @param attributeValue Der Wert den das <code>addressAttribute</code> haben soll.
+	 * @param content Die zu uebertragenen Daten.
+	 * @param requestProperties Zusaetzliche Properties die fuer die Uebertragung gesetzt werden koennen. Geben sie <code>null</code> an falls keine Werte benoetigt werden.
+	 * @return Das UrlConnection-Objekt aus welchem die Antwort bzw. der Statuscode ausgelesen werden kann.
+	 */
+	private static HttpURLConnection transmitBytes(String httpType, String addressAttribute, String attributeValue, InputStream content, Map<String, String> requestProperties)
 	{
 		HttpURLConnection httpCon = null;
 		try
@@ -207,6 +225,11 @@ public class TransformationHelper
 			httpCon.setDoOutput(true);
 			httpCon.setRequestMethod(httpType);
 
+			//Alle Uebertragungseigenschaften festlegen
+			if(requestProperties != null)
+				for (String value : requestProperties.keySet())
+					httpCon.setRequestProperty(value, requestProperties.get(value));
+			
 			// Stream fuer den Output definieren
 			BufferedOutputStream out = new BufferedOutputStream(httpCon.getOutputStream(), 1024);
 
@@ -230,7 +253,13 @@ public class TransformationHelper
 		}
 		return httpCon;
 	}
-	
+
+	/**
+	 * Liest Exif-Informationen aus dem zuletzt hochgeladenem Bild aus.
+	 * @param name Der Name der Exif-Information die ausgelesen werden soll. Derzeit wird nur <code>geo_lat</code> und <code>geo_long</code> unterstuetzt.
+	 * @param url Die Url des Bildes.
+	 * @return Der ausgelesene Wert. Der <code>String</code> ist leer falls die Information nicht ausgelesen werden konnte.
+	 */
 	public static String getMetaInformation(String name, String url)
 	{
 		BufferedInputStream picInput = null;
@@ -245,20 +274,20 @@ public class TransformationHelper
 			Metadata metadata = com.drew.imaging.ImageMetadataReader.readMetadata(picInput);
 
 			Directory gpsDir = metadata.getDirectory(GpsDirectory.class);
-			if (name.equals("geo_lat")&&gpsDir != null)
-			{	
+			if (name.equals("geo_lat") && gpsDir != null)
+			{
 				String latitude = gpsDir.getDescription(GpsDirectory.TAG_GPS_LATITUDE);
 				String latitudeRef = gpsDir.getDescription(GpsDirectory.TAG_GPS_LATITUDE_REF);
-				if(latitude == null)
+				if (latitude == null)
 					return "";
 				double res = convertHourToDecimal(latitude);
 				return latitudeRef.equalsIgnoreCase("S") ? String.valueOf(-res) : String.valueOf(res);
 			}
-			if (name.equals("geo_long")&&gpsDir != null)
+			if (name.equals("geo_long") && gpsDir != null)
 			{
 				String longitude = gpsDir.getDescription(GpsDirectory.TAG_GPS_LONGITUDE);
 				String longitudeRef = gpsDir.getDescription(GpsDirectory.TAG_GPS_LONGITUDE_REF);
-				if(longitude == null)
+				if (longitude == null)
 					return "";
 				double res = convertHourToDecimal(longitude);
 				return longitudeRef.equalsIgnoreCase("W") ? String.valueOf(-res) : String.valueOf(res);
@@ -279,14 +308,20 @@ public class TransformationHelper
 			{
 			}
 		}
-		
+
 		return "";
 	}
-	
-	private static double convertHourToDecimal(String degree) {
-	    if(!degree.matches("(-)?([0-6])?[0-9]\"[0-6][0-9]\'([0-6])?[0-9](.[0-9]{1,9})?"))
-	        return 0;
-	    String[] strArray=degree.split("[\"']");
-	    return Double.parseDouble(strArray[0])+Double.parseDouble(strArray[1])/60+Double.parseDouble(strArray[2])/3600;
+
+	/**
+	 * Konvertiert eine GPS-Minutenangabe in Grad.
+	 * @param degree Die GPS-Minutenangabe.
+	 * @return Der ermittelte Gradwert.
+	 */
+	private static double convertHourToDecimal(String degree)
+	{
+		if (!degree.matches("(-)?([0-6])?[0-9]\"[0-6][0-9]\'([0-6])?[0-9](.[0-9]{1,9})?"))
+			return 0;
+		String[] strArray = degree.split("[\"']");
+		return Double.parseDouble(strArray[0]) + Double.parseDouble(strArray[1]) / 60 + Double.parseDouble(strArray[2]) / 3600;
 	}
 }
