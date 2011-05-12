@@ -17,10 +17,6 @@
 		<xsl:variable name="var_descision">
 			<xsl:number>1</xsl:number>
 		</xsl:variable>
-		<xsl:variable name="var_uploaded">
-			<xsl:text>false</xsl:text>
-		</xsl:variable>
-		
 		
 		<xsl:if test="count(log/error) &gt; 0">
 			<xsl:variable name="var_descision">
@@ -38,11 +34,16 @@
 			<xsl:for-each select="log/warning">
 			<warning><xsl:value-of select="." /></warning>
 			</xsl:for-each>
-			
+
  			<xsl:variable name="var_uploaded">
- 				<xsl:if test="@id">
-					<xsl:value-of select="boolean(javaHelper:uploadMetadata(number(@id), photo))"/>
-				</xsl:if>
+				<xsl:choose>
+					<xsl:when test="string(@id)">
+						<xsl:value-of select="boolean(javaHelper:uploadMetadata(number(@id), photo))"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>false</xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:variable>
 			<result>			
 				<xsl:text>Der Upload des Bildes war </xsl:text>
