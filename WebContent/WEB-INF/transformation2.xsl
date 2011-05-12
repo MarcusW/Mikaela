@@ -39,8 +39,10 @@
 			<warning><xsl:value-of select="." /></warning>
 			</xsl:for-each>
 			
-			<xsl:variable name="var_uploaded">
-				<xsl:value-of select="boolean(javaHelper:uploadMetadata(number(@id), photo))"/>
+ 			<xsl:variable name="var_uploaded">
+ 				<xsl:if test="@id">
+					<xsl:value-of select="boolean(javaHelper:uploadMetadata(number(@id), photo))"/>
+				</xsl:if>
 			</xsl:variable>
 			<result>			
 				<xsl:text>Der Upload des Bildes war </xsl:text>

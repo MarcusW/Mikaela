@@ -25,23 +25,29 @@
 	</xsl:template>
 
 	<xsl:template match="xhtml:li">
+		<xsl:variable name="var_url">
+			<xsl:value-of select="./xhtml:img/@src" />
+		</xsl:variable>
+					
 		<xsl:variable name="var_name">
-			<xsl:value-of select="./xhtml:h2" />
+			<xsl:value-of select="javaHelper:extractNameFromFilePath(string($var_url))" />
 		</xsl:variable>
 
-
+		<photocontainer>
 		<!-- Pruefe ob das Bild bereits hochgeladen wurde. -->
 		<xsl:choose>
-			<!-- TODO: kleiner in groesser gleich aendern -->
-			<xsl:when test="count(document('http://141.76.61.48:8103/photos')//pp:photo[@original_filename=$var_name]) &lt; 0">
-
+			<xsl:when test="not(boolean(javaHelper:isFileNullOrEmpty('http://141.76.61.48:8103/photos'))) and count(document('http://141.76.61.48:8103/photos')//pp:photo[@original_filename=$var_name]) &gt; 0">
+					<photo/>
+					<log>
+						<xsl:attribute name="picture">
+							<xsl:value-of select="$var_name" />
+						</xsl:attribute>
+						<error>
+							<xsl:text>Bild bereits auf Webservice vorhanden.</xsl:text>
+						</error>
+					</log>			
 			</xsl:when>
 			<xsl:otherwise>
-				<photocontainer>
-					<xsl:variable name="var_url">
-						<xsl:value-of select="./xhtml:img/@src" />
-					</xsl:variable>
-	
 					<xsl:variable name="var_id" select="javaHelper:uploadImage($var_url)"/>
 	
 					<!-- Fuege neue id dem Photocontainer hinzu -->
@@ -74,8 +80,15 @@
 					<!-- Rufe ID des Users ab falls er im System registriert ist. Sonst setze UserID auf -1 -->
 					<xsl:variable name="var_userID">
 						<xsl:choose>
-							<xsl:when test="count(document('http://141.76.61.48:8103/users')//pp:user[@username=$var_author]) &gt; 0">
-								<xsl:value-of select="document('http://141.76.61.48:8103/users')//pp:user[@username=$var_author]/@id" />
+							<xsl:when test="not(boolean(javaHelper:isFileNullOrEmpty('http://141.76.61.48:8103/users')))">
+								<xsl:choose>
+									<xsl:when test="count(document('http://141.76.61.48:8103/users')//pp:user[@username=$var_author]) &gt; 0">
+										<xsl:value-of select="document('http://141.76.61.48:8103/users')//pp:user[@username=$var_author]/@id" />
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:text>-1</xsl:text>
+									</xsl:otherwise>
+								</xsl:choose>
 							</xsl:when>
 							<xsl:otherwise>
 								<xsl:text>-1</xsl:text>
@@ -189,10 +202,16 @@
 								<xsl:text> ist im System nicht registriert. Das entsprechende Attribut wird weggelassen.</xsl:text>
 							</warning>
 						</xsl:if>			
+						<!-- wenn dateiname ungleich h2-inhalt, warning ausgeben  -->
+						<xsl:if test="string($var_name) != string(./xhtml:h2)">
+							<warning>
+								<xsl:text>Originaler Dateiname ungleich Dateiname in h2.</xsl:text>
+							</warning>
+						</xsl:if>
 					</log>
-				</photocontainer>
 			</xsl:otherwise>
 		</xsl:choose>
+		</photocontainer>
 	</xsl:template>
 
 </xsl:stylesheet>

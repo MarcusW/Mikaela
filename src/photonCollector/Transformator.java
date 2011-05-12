@@ -111,8 +111,7 @@ public class Transformator
 				}
 			});
 			
-			SAXSource xmlSource = new SAXSource(reader, new InputSource(
-					inStream));
+			SAXSource xmlSource = new SAXSource(reader, new InputSource(inStream));
 
 			// Führe Transformation aus
 			SAXTransformerFactory transFact = (SAXTransformerFactory) SAXTransformerFactory.newInstance();

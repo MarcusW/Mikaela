@@ -3,15 +3,41 @@ package test;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.*;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
 import photonCollector.TransformationHelper;
 
 public class TransformationHelperForTesting extends TransformationHelper
 {
 	public static void deleteAllPhotos()
 	{
-		for (int i = 1; i <= 48; i++)
+		try
 		{
-			transmitBytes(i);
+	        Document xmlDocument = DocumentBuilderFactory.
+			newInstance().newDocumentBuilder().
+			parse(getWebserviceUrl());
+			
+			XPathFactory xPathFactory = XPathFactory.newInstance();
+
+			XPath xPath = xPathFactory.newXPath();
+
+			String expression = "/*/*/@id";
+			XPathExpression xPathExpression = xPath.compile(expression);
+
+			NodeList nl = (NodeList)xPathExpression.evaluate(xmlDocument, XPathConstants.NODESET);
+			for (int i = 0; i < nl.getLength(); i++)
+			{
+				transmitBytes(Integer.parseInt(nl.item(i).getNodeValue()));
+				System.out.println("Loesche Bild mit ID:" + nl.item(i).getNodeValue());
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 	}
 	

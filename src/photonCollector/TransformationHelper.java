@@ -50,90 +50,102 @@ public class TransformationHelper
 	 */
 	public static boolean checkPropertyFile()
 	{
-		if(getWebserviceUrl().equals(""))
+		if (getWebserviceUrl().equals(""))
 		{
 			System.err.println("Kein Webserver fuer Upload angegeben.");
 			return false;
 		}
-		
+
 		File firstXsl = new File(getFirstXslPath());
 		File secondXsl = new File(getSecondXslPath());
 		File xhtmlFile = new File(getXhtmlPath());
 		File tmpDir = new File(getTmpFolderPath());
-		
-		if(!firstXsl.exists())
+
+		if (!firstXsl.exists())
 		{
 			System.err.println("xsl_xhtmlToXml existiert nicht.");
 			return false;
 		}
-		if(!secondXsl.exists())
+		if (!secondXsl.exists())
 		{
 			System.err.println("xsl_xmlToLog existiert nicht.");
 			return false;
 		}
-		if(!xhtmlFile.exists())
+		if (!xhtmlFile.exists())
 		{
 			System.err.println("xhtml_file existiert nicht.");
 			return false;
 		}
-		if(!tmpDir.exists())
+		if (!tmpDir.exists())
 		{
 			System.err.println("tmp_folder existiert nicht.");
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
-	 * Gibt die Url des Webservice zurueck auf den die Photos hochgeladen werden sollen.
+	 * Gibt die Url des Webservice zurueck auf den die Photos hochgeladen werden
+	 * sollen.
+	 * 
 	 * @return Die Url des Webservice.
 	 */
 	public static String getWebserviceUrl()
 	{
 		return getPropertyInformation("web_url");
 	}
-	
+
 	/**
 	 * Gibt den absoluten Pfad zur Transformationsdatei Xhtml -> Xml zurueck.
+	 * 
 	 * @return Der absolute Dateipfad.
 	 */
 	public static String getFirstXslPath()
 	{
 		return currentPath + "/" + getPropertyInformation("xsl_xhtmlToXml");
 	}
-	
+
 	/**
 	 * Gibt den absoluten Pfad zur Transformationsdatei Xml -> XmlLog zurueck.
+	 * 
 	 * @return Der absolute Dateipfad.
 	 */
 	public static String getSecondXslPath()
 	{
 		return currentPath + "/" + getPropertyInformation("xsl_xmlToLog");
 	}
-	
+
 	/**
-	 * Gibt den absoluten Pfad zur Xhtml-Datei zurueck die transformiert werden soll.
+	 * Gibt den absoluten Pfad zur Xhtml-Datei zurueck die transformiert werden
+	 * soll.
+	 * 
 	 * @return Der absolute Dateipfad.
 	 */
 	public static String getXhtmlPath()
 	{
 		return currentPath + "/" + getPropertyInformation("xhtml_file");
 	}
-	
+
 	/**
-	 * Gibt den absoluten Pfad zum Ordner zurueck indem einzelne Bilder abgelegt werden koennen.
+	 * Gibt den absoluten Pfad zum Ordner zurueck indem einzelne Bilder abgelegt
+	 * werden koennen.
+	 * 
 	 * @return Der absolute Dateipfad.
 	 */
 	private static String getTmpFolderPath()
 	{
 		return currentPath + "/" + getPropertyInformation("tmp_folder");
 	}
-	
+
 	/**
 	 * Liest einen Eintrag aus der Konfigurationsdatei aus.
-	 * @param name Der Name der gesuchten Eigenschaft.
-	 * @return Der Wert welcher Der Eigenschaft zugewiesen wurde. Der <code>String</code> ist leer falls die Eigenschaft nicht ausgelesen werden konnte.
+	 * 
+	 * @param name
+	 *            Der Name der gesuchten Eigenschaft.
+	 * @return Der Wert welcher Der Eigenschaft zugewiesen wurde. Der
+	 *         <code>String</code> ist leer falls die Eigenschaft nicht
+	 *         ausgelesen werden konnte.
 	 */
 	private static String getPropertyInformation(String name)
 	{
@@ -174,7 +186,6 @@ public class TransformationHelper
 		return -1;
 	}
 
-	
 	/**
 	 * Laedt das Bild mit der angegebenen ID zum Webservice hoch.
 	 * 
@@ -185,6 +196,7 @@ public class TransformationHelper
 	 */
 	public static int uploadImage(String url)
 	{
+		System.out.println("Lade Bild " + url + " hoch");
 		try
 		{
 			URL imageUrl = new URL(url);
@@ -245,7 +257,6 @@ public class TransformationHelper
 		}
 	}
 
-	
 	/**
 	 * Fuehrt einen Http-Putbefehl auf dem Webservice aus.
 	 * 
@@ -285,7 +296,41 @@ public class TransformationHelper
 		return 0;
 	}
 
-	
+	/**
+	 * Pueft ob die angegebene Datei existiert und einen beliebigen Inhalt
+	 * besitzt.
+	 * 
+	 * @param path
+	 *            Der URL zur Datei.
+	 * @return Gibt <code>false</code> zurueck falls auf die Datei nicht
+	 *         zugegriffen werden kann oder diese leer ist.
+	 */
+	public static boolean isFileNullOrEmpty(String url_string)
+	{
+		InputStream in = null;
+		try
+		{
+			URL url = new URL(url_string);
+			in = url.openStream();
+			BufferedReader dis = new BufferedReader(new InputStreamReader(in));
+			return dis.read() == -1;
+		}
+		catch (Exception ex)
+		{
+		}
+		finally
+		{
+			try
+			{
+				in.close();
+			}
+			catch (Exception ex)
+			{
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * Laedt die Metadaten eines Bildes zum Webservice hoch.
 	 * 
@@ -300,6 +345,7 @@ public class TransformationHelper
 	{
 		try
 		{
+			System.out.println("Lade Metadaten fuer Bild mit ID: " + id + " hoch");
 			Document newXmlDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 
 			for (int i = 0; i < nodes.getLength(); i++)
@@ -393,8 +439,21 @@ public class TransformationHelper
 		}
 		return httpCon;
 	}
-
 	
+	/**
+	 * Extrahiert den Dateinamen inklusive Endung aus dem angegebenen Pfad.
+	 * @param path Der Pfad bzw. die Url der Datei
+	 * @return Der Dateiname mit Endung. Falls der <code>path</code> keinen Slash enthielt, so wird <code>path</code> zurueckgegeben.
+	 */
+	public static String extractNameFromFilePath(String path)
+	{
+		String[] parts = path.split("/");
+		if(parts.length == 0)
+			return path;
+		
+		return parts[parts.length - 1];
+	}
+
 	/**
 	 * Liest Exif-Informationen aus dem zuletzt hochgeladenem Bild aus.
 	 * 
