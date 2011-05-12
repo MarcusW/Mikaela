@@ -50,12 +50,18 @@ public class TransformationHelper
 	 */
 	public static boolean checkPropertyFile()
 	{
-		if (getWebserviceUrl().equals(""))
+		if (getWebservicePhotoUrl().equals(""))
 		{
-			System.err.println("Kein Webserver fuer Upload angegeben.");
+			System.err.println("Keine photos.xml angegeben.");
 			return false;
 		}
 
+		if (getWebserviceUserUrl().equals(""))
+		{
+			System.err.println("Keine users.xml angegeben.");
+			return false;
+		}
+		
 		File firstXsl = new File(getFirstXslPath());
 		File secondXsl = new File(getSecondXslPath());
 		File xhtmlFile = new File(getXhtmlPath());
@@ -91,9 +97,18 @@ public class TransformationHelper
 	 * 
 	 * @return Die Url des Webservice.
 	 */
-	public static String getWebserviceUrl()
+	public static String getWebservicePhotoUrl()
 	{
-		return getPropertyInformation("web_url");
+		return getPropertyInformation("web_photo_url");
+	}
+	
+	/**
+	 * Gibt die Url des Webservers zurueck unter der die users.xml verfuegbar ist.
+	 * @return Die Url zur users.xml
+	 */
+	public static String getWebserviceUserUrl()
+	{
+		return getPropertyInformation("web_user_url");
 	}
 
 	/**
@@ -404,7 +419,7 @@ public class TransformationHelper
 		try
 		{
 			// Url des Webservice erstellen
-			URL url = new URL(getWebserviceUrl() + "?" + addressAttribute + "=" + attributeValue);
+			URL url = new URL(getWebservicePhotoUrl() + "?" + addressAttribute + "=" + attributeValue);
 
 			// Verbindung aufbauen und den Typ setzen
 			httpCon = (HttpURLConnection) url.openConnection();

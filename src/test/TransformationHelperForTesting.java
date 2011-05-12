@@ -11,15 +11,25 @@ import org.w3c.dom.NodeList;
 
 import photonCollector.TransformationHelper;
 
+/**
+ * Erweiterter TransformationHelper, vorrangig fuer Testzwecke.
+ * @author marcus
+ *
+ */
 public class TransformationHelperForTesting extends TransformationHelper
 {
+	/**
+	 * Sendet fuer jedes Photo eine Delete-Anfrage.
+	 */
 	public static void deleteAllPhotos()
 	{
 		try
 		{
+			if(isFileNullOrEmpty(getWebservicePhotoUrl()))
+				return;
 	        Document xmlDocument = DocumentBuilderFactory.
 			newInstance().newDocumentBuilder().
-			parse(getWebserviceUrl());
+			parse(getWebservicePhotoUrl());
 			
 			XPathFactory xPathFactory = XPathFactory.newInstance();
 
@@ -46,7 +56,7 @@ public class TransformationHelperForTesting extends TransformationHelper
 		HttpURLConnection httpCon = null;
 		try
 		{
-			URL url = new URL(getWebserviceUrl() + "?id=" + id);
+			URL url = new URL(getWebservicePhotoUrl() + "?id=" + id);
 			httpCon = (HttpURLConnection) url.openConnection();
 			httpCon.setDoOutput(true);
 			httpCon.setRequestProperty(

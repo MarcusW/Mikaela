@@ -49,12 +49,12 @@ public class Index extends HttpServlet
 		}
 		
 		String path = request.getParameter("delete");
-		TransformationHelper.isFileNullOrEmpty("http://141.76.61.48:8103/photos");
+		TransformationHelper.isFileNullOrEmpty(TransformationHelper.getWebservicePhotoUrl());
 		//Falls delete=1 angehangen wird, werden die default-photos entfernt vom Webserver
 		if(path != null && path.equals("1"))
 			TransformationHelperForTesting.deleteAllPhotos();
 		
-		TransformationHelper.isFileNullOrEmpty("http://141.76.61.48:8103/photos");
+		TransformationHelper.isFileNullOrEmpty(TransformationHelper.getWebservicePhotoUrl());
 		
 		// Transformationsschritt 1 laedt das Bild hoch und gibt eine Xml-Datei
 		// zurueck welche alle zu aktualisierenden Photos enthaelt.

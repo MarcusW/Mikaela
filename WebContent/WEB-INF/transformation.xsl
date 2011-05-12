@@ -36,7 +36,7 @@
 		<photocontainer>
 		<!-- Pruefe ob das Bild bereits hochgeladen wurde. -->
 		<xsl:choose>
-			<xsl:when test="not(boolean(javaHelper:isFileNullOrEmpty('http://141.76.61.48:8103/photos'))) and count(document('http://141.76.61.48:8103/photos')//pp:photo[@original_filename=$var_name]) &gt; 0">
+			<xsl:when test="not(boolean(javaHelper:isFileNullOrEmpty(javaHelper:getWebservicePhotoUrl()))) and count(document(javaHelper:getWebservicePhotoUrl())//pp:photo[@original_filename=$var_name]) &gt; 0">
 					<photo/>
 					<log>
 						<xsl:attribute name="picture">
@@ -80,10 +80,10 @@
 					<!-- Rufe ID des Users ab falls er im System registriert ist. Sonst setze UserID auf -1 -->
 					<xsl:variable name="var_userID">
 						<xsl:choose>
-							<xsl:when test="not(boolean(javaHelper:isFileNullOrEmpty('http://141.76.61.48:8103/users')))">
+							<xsl:when test="not(boolean(javaHelper:isFileNullOrEmpty(javaHelper:getWebserviceUserUrl())))">
 								<xsl:choose>
-									<xsl:when test="count(document('http://141.76.61.48:8103/users')//pp:user[@username=$var_author]) &gt; 0">
-										<xsl:value-of select="document('http://141.76.61.48:8103/users')//pp:user[@username=$var_author]/@id" />
+									<xsl:when test="count(document(javaHelper:getWebserviceUserUrl())//pp:user[@username=$var_author]) &gt; 0">
+										<xsl:value-of select="document(javaHelper:getWebserviceUserUrl())//pp:user[@username=$var_author]/@id" />
 									</xsl:when>
 									<xsl:otherwise>
 										<xsl:text>-1</xsl:text>
