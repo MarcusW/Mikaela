@@ -1,5 +1,6 @@
 package test;
 
+import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -71,5 +72,25 @@ public class TransformationHelperForTesting extends TransformationHelper
 			e.printStackTrace();
 		}
 		return httpCon;
+	}
+	
+	public static void cleanTmpFolder()
+	{
+		try
+		{
+			File tmpFolder = new File(getTmpFolderPath());
+			for (File file : tmpFolder.listFiles())
+			{
+				if(file.getName().startsWith("tmp."))
+				{
+					System.out.println("Loesche temporaere Datei: " + file.getName());
+					file.delete();
+				}
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 }

@@ -48,10 +48,10 @@ public class Index extends HttpServlet
 			return;
 		}
 		
-		String path = request.getParameter("delete");
+		String delete = request.getParameter("delete");
 		TransformationHelper.isFileNullOrEmpty(TransformationHelper.getWebservicePhotoUrl());
 		//Falls delete=1 angehangen wird, werden die default-photos entfernt vom Webserver
-		if(path != null && path.equals("1"))
+		if(delete != null && delete.equals("1"))
 			TransformationHelperForTesting.deleteAllPhotos();
 		
 		TransformationHelper.isFileNullOrEmpty(TransformationHelper.getWebservicePhotoUrl());
@@ -85,5 +85,9 @@ public class Index extends HttpServlet
 		
 		// Ausgeben der Logdatei
 		writer.write(logXml.toString());
+		
+		String clean = request.getParameter("clean");
+		if(clean != null && clean.equals("1"))
+			TransformationHelperForTesting.cleanTmpFolder();
 	}
 }

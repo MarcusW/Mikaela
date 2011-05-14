@@ -148,7 +148,7 @@ public class TransformationHelper
 	 * 
 	 * @return Der absolute Dateipfad.
 	 */
-	private static String getTmpFolderPath()
+	protected static String getTmpFolderPath()
 	{
 		return currentPath + "/" + getPropertyInformation("tmp_folder");
 	}
