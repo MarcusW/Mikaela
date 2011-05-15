@@ -202,7 +202,7 @@ public class TransformationHelper
 	}
 
 	/**
-	 * Laedt das Bild mit der angegebenen ID zum Webservice hoch.
+	 * Laedt das Bild mit der angegebenen Url zum Webservice hoch.
 	 * 
 	 * @param url
 	 *            Die url unter der das Bild erreichbar ist.
