@@ -116,14 +116,14 @@
 								<xsl:value-of select="substring(./xhtml:img/@alt,6)" />
 							</xsl:attribute>
 							
-							<!-- Falls es leerer String zurueckgeliefert wurde, muss das gesamt Attribut verschwinden -->
+							<!-- Falls es leerer String zurueckgeliefert wurde, muss das gesamte Attribut verschwinden -->
 							<xsl:if test="string-length($var_geo_lat) &gt; 0"> 
 								<xsl:attribute name="geo_lat"> 
 									<xsl:value-of select="$var_geo_lat" /> 
 								</xsl:attribute> 
 							</xsl:if>
 							
-							<!-- Falls es leerer String zurueckgeliefert wurde, muss das gesamt Attribut verschwinden -->
+							<!-- Falls es leerer String zurueckgeliefert wurde, muss das gesamte Attribut verschwinden -->
 							<xsl:if test="string-length($var_geo_long) &gt; 0">
 								<xsl:attribute name="geo_long"> 
 									<xsl:value-of select="$var_geo_long" /> 
@@ -150,11 +150,13 @@
 								<xsl:text>1</xsl:text>
 							</xsl:attribute>
 							
+							<!-- wenn es keinen Autor gibt, muss das gesamte Attribut verschwinden -->
 							<xsl:if test="$var_userID &gt; -1">
 								<xsl:attribute name="author">
 									<xsl:value-of select="$var_userID" />
 								</xsl:attribute>
 							</xsl:if>
+
 							<tags>
 								<xsl:for-each select="./xhtml:dl/xhtml:dd[7]/xhtml:ul/xhtml:li">
 									<tag>
@@ -188,20 +190,20 @@
 						<xsl:if test="string-length($var_geo_long) &lt; 1">
 							<warning>
 								<xsl:text>Das Bild enthielt keine Informationen ueber den geografische Laenge oder die Umrechnung in Grad ist fehlgeschlagen.</xsl:text>
-							</warning>						
-						</xsl:if>	
+							</warning>
+						</xsl:if>
 						<xsl:if test="string-length($var_geo_lat) &lt; 1">
 							<warning>
 								<xsl:text>Das Bild enthielt keine Informationen ueber den geografische Breite oder die Umrechnung in Grad ist fehlgeschlagen.</xsl:text>
-							</warning>						
+							</warning>
 						</xsl:if>
 						<xsl:if test="number($var_userID) &lt; 0">
 							<warning>
-								<xsl:text>Die Nutzer: </xsl:text>
+								<xsl:text>Der Nutzer: </xsl:text>
 								<xsl:value-of select="$var_author" />
 								<xsl:text> ist im System nicht registriert. Das entsprechende Attribut wird weggelassen.</xsl:text>
 							</warning>
-						</xsl:if>			
+						</xsl:if>
 						<!-- wenn dateiname ungleich h2-inhalt, warning ausgeben  -->
 						<xsl:if test="string($var_name) != string(./xhtml:h2)">
 							<warning>

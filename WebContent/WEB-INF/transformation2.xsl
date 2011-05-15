@@ -13,28 +13,19 @@
 		</logs>
 	</xsl:template>
 	<xsl:template match="photocontainer">
-		<!-- Entscheinde Variable, ob Metadaten hochgeladen werden soll oder nicht -->
-		<xsl:variable name="var_descision">
-			<xsl:number>1</xsl:number>
-		</xsl:variable>
-		
-		<xsl:if test="count(log/error) &gt; 0">
-			<xsl:variable name="var_descision">
-				<xsl:number>0</xsl:number>
-			</xsl:variable>
-		</xsl:if>
-		
 		<log>
+			<!-- attribut picture mit dateiname um einzelne logs zuzuordnen  -->
 			<xsl:attribute name="picture">
 				<xsl:value-of select="log/@picture"/>
 			</xsl:attribute>
+			<!-- uebernahme der input log-eintraege -->
 			<xsl:for-each select="log/error">
 			<error><xsl:value-of select="." /></error>
 			</xsl:for-each>
 			<xsl:for-each select="log/warning">
 			<warning><xsl:value-of select="." /></warning>
 			</xsl:for-each>
-
+			<!-- Upload der Metadaten fuer den fall, dass es eine ID gibt -->
  			<xsl:variable name="var_uploaded">
 				<xsl:choose>
 					<xsl:when test="string(@id)">
@@ -45,6 +36,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
+			<!-- abschliessender Log-Eintrag zeigt das Ergebnis des Vorgangs  -->
 			<result>			
 				<xsl:text>Der Upload des Bildes war </xsl:text>
 				<xsl:if test="string($var_uploaded) = 'false'">
